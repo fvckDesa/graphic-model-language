@@ -1,0 +1,32 @@
+{
+  "name": "web",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint --max-warnings 0",
+    "lint:fix": "next lint --max-warnings 0 --fix",
+    "lint:types": "tsc"
+  },
+  "dependencies": {
+    "clsx": "^1.2.1",
+    "next": "13.4.9",
+    "react": "^18.2.0",
+    "react-dom": "18.2.0",
+    "ui": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/react": "^18.2.0",
+    "@types/react-dom": "^18.2.0",
+    "autoprefixer": "10.4.14",
+    "eslint": "^7.32.0",
+    "eslint-config-custom": "workspace:*",
+    "postcss": "8.4.25",
+    "tailwind-config": "workspace:*",
+    "tailwindcss": "3.3.2",
+    "tsconfig": "workspace:*",
+    "typescript": "^5.1.0"
+  }
+}
