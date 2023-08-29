@@ -1,11 +1,9 @@
 {
-  "name": "ui",
+  "name": "cn",
   "version": "0.0.0",
+  "type": "module",
+  "main": "./build/index.js",
   "types": "./build/index.d.ts",
-  "exports": {
-    ".": "./build",
-    "./styles.css": "./build/index.css"
-  },
   "license": "MIT",
   "scripts": {
     "build": "tsup",
@@ -14,24 +12,15 @@
     "lint:fix": "eslint **/*.{ts,tsx} --max-warnings 0 --fix",
     "lint:types": "tsc --noEmit"
   },
-  "dependencies": {
-    "cn": "workspace:*"
-  },
-  "peerDependencies": {
-    "react": "^18.2.0"
-  },
   "devDependencies": {
-    "@types/react": "^18.2.0",
-    "@types/react-dom": "^18.2.0",
-    "autoprefixer": "10.4.14",
     "eslint": "^7.32.0",
     "eslint-config-custom": "workspace:*",
-    "postcss": "8.4.25",
-    "react": "^18.2.0",
-    "tailwind-config": "workspace:*",
-    "tailwindcss": "^3.3.2",
     "tsconfig": "workspace:*",
     "tsup": "^7.1.0",
     "typescript": "^5.1.0"
+  },
+  "dependencies": {
+    "clsx": "^1.2.1",
+    "tailwind-merge": "^1.14.0"
   }
 }
