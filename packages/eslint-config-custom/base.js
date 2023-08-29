@@ -21,4 +21,12 @@ module.exports = {
     quotes: ["error", "double", { avoidEscape: true }],
     semi: ["error", "always"],
   },
+  overrides: [
+    {
+      files: ["*.cjs"],
+      env: {
+        node: true,
+      },
+    },
+  ],
 };
