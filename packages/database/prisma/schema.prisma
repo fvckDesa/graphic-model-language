@@ -1,0 +1,64 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Project {
+  name       String      @id
+  url        String      @unique
+  workspaces Workspace[]
+  nodes      NodeType[]
+}
+
+model Workspace {
+  id          String   @id @default(uuid())
+  createdAt   DateTime @default(now())
+  updateAt    DateTime @updatedAt
+  project     Project  @relation(fields: [projectName], references: [name])
+  projectName String
+  nodes       Node[]
+  edges       Edge[]
+}
+
+model NodeType {
+  name        String  @id
+  schema      Json    @db.Json
+  states      State[]
+  Node        Node[]
+  project     Project @relation(fields: [projectName], references: [name])
+  projectName String
+}
+
+model Node {
+  id           String    @id @default(uuid())
+  pos_x        Float
+  pos_y        Float
+  nodeType     NodeType  @relation(fields: [nodeTypeName], references: [name])
+  nodeTypeName String
+  workspace    Workspace @relation(fields: [workspaceId], references: [id])
+  workspaceId  String
+}
+
+model Edge {
+  id           String    @id @default(uuid())
+  source       String
+  target       String
+  sourceHandle String
+  targetHandle String
+  workspace    Workspace @relation(fields: [workspaceId], references: [id])
+  workspaceId  String
+}
+
+model State {
+  id           String   @id @default(uuid())
+  value        Json     @db.JsonB
+  nodeType     NodeType @relation(fields: [nodeTypeName], references: [name])
+  nodeTypeName String
+}

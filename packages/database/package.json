@@ -1,0 +1,35 @@
+{
+  "name": "database",
+  "version": "1.0.0",
+  "description": "",
+  "exports": {
+    "/client": {
+      "import": "./build/client.js",
+      "types": "./build/client.d.ts"
+    }
+  },
+  "prisma": {
+    "schema": "./prisma/schema.prisma",
+    "seed": "tsx prisma/seed.ts"
+  },
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "prisma": "prisma"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^20.5.7",
+    "eslint": "^7.32.0",
+    "eslint-config-custom": "workspace:*",
+    "prisma": "^5.2.0",
+    "tsconfig": "workspace:*",
+    "tsup": "^7.1.0",
+    "typescript": "^5.1.0"
+  },
+  "dependencies": {
+    "@prisma/client": "^5.2.0"
+  }
+}

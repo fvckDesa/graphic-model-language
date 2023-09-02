@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev --turbo",
     "build": "next build",
     "start": "next start",
     "lint": "next lint --max-warnings 0",
@@ -11,12 +11,13 @@
     "lint:types": "tsc --noEmit"
   },
   "dependencies": {
+    "cn": "workspace:*",
     "next": "13.4.9",
     "react": "^18.2.0",
     "react-dom": "18.2.0",
     "reactflow": "^11.7.4",
     "ui": "workspace:*",
-    "cn": "workspace:*"
+    "database": "workspace:*"
   },
   "devDependencies": {
     "@types/react": "^18.2.0",
