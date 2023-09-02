@@ -4,14 +4,17 @@
   "type": "module",
   "scripts": {
     "build": "turbo run build",
-    "dev": "turbo run dev",
+    "dev": "dotenv -e .env.dev -- turbo run dev",
+    "docker:dev": "docker compose --env-file .env.dev up -d",
+    "prisma:dev": "dotenv -e .env.dev -- pnpm --filter database prisma",
     "lint": "turbo run lint",
     "lint:fix": "turbo run lint:fix",
     "lint:types": "turbo run lint:types",
-    "format": "prettier --ignore-unknown --write **/*"
+    "format": "prettier --ignore-unknown --write **/* && pnpm prisma:dev format"
   },
   "devDependencies": {
     "@turbo/gen": "^1.9.7",
+    "dotenv-cli": "^7.3.0",
     "eslint": "^7.32.0",
     "eslint-config-custom": "workspace:*",
     "prettier": "^2.5.1",
