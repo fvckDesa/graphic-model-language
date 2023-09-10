@@ -11,18 +11,18 @@ datasource db {
 }
 
 model Project {
-  name       String      @id
-  url        String      @unique
+  type       String      @id
   workspaces Workspace[]
   nodes      NodeType[]
 }
 
 model Workspace {
   id          String   @id @default(uuid())
+  name        String   @unique
   createdAt   DateTime @default(now())
   updateAt    DateTime @updatedAt
-  project     Project  @relation(fields: [projectName], references: [name])
-  projectName String
+  project     Project  @relation(fields: [projectType], references: [type], onDelete: Cascade, onUpdate: Cascade)
+  projectType String
   nodes       Node[]
   edges       Edge[]
 }
@@ -32,8 +32,8 @@ model NodeType {
   schema      Json    @db.Json
   states      State[]
   Node        Node[]
-  project     Project @relation(fields: [projectName], references: [name])
-  projectName String
+  project     Project @relation(fields: [projectType], references: [type], onDelete: Cascade, onUpdate: Cascade)
+  projectType String
 }
 
 model Node {

@@ -1,44 +1,27 @@
-import Providers from "@/components/Providers";
-import Workspace from "@/components/Workspace";
-import DragElement from "@/components/DragElement";
+import { prisma } from "database/client";
+import Link from "next/link";
 
-interface NodeItem {
-  type: string;
-  label: string;
-  connections: string[];
-}
-
-const NodesIds: NodeItem[] = [
-  { type: "input", label: "input", connections: ["default", "output"] },
-  { type: "default", label: "neutral", connections: ["default", "output"] },
-  { type: "output", label: "output", connections: [] },
-];
-
-export default function Home() {
+export default async function Home() {
+  const workspaces = await prisma.workspace.findMany({
+    select: {
+      id: true,
+      name: true,
+      projectType: true,
+    },
+  });
   return (
-    <Providers>
-      <div className="grid h-full w-full grid-cols-[1fr,3fr]">
-        <aside className="border-r-2 border-gray-400 p-4">
-          {NodesIds.map(({ type, label, connections }) => (
-            <DragElement
-              key={label}
-              className="mb-2 flex cursor-grab items-center justify-center border border-gray-400 px-3 py-1"
-              data={{
-                type,
-                data: { label, connections },
-                width: 150,
-                height: 40,
-              }}
-              type="application/node"
-            >
-              {label}
-            </DragElement>
-          ))}
-        </aside>
-        <main>
-          <Workspace />
-        </main>
-      </div>
-    </Providers>
+    <main className="flex flex-col items-center justify-center gap-6 p-8">
+      <h1>Select Workspace</h1>
+      <ul className="w-full max-w-md">
+        {workspaces.map(({ id, name, projectType }) => (
+          <li key={id} className="w-full rounded border border-gray-400">
+            <Link href={`/workspace/${id}`} className="block px-4 py-2">
+              <h1>{name}</h1>
+              <h3>{projectType}</h3>
+            </Link>
+          </li>
+        ))}
+      </ul>
+    </main>
   );
 }

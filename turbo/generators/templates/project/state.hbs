@@ -1,0 +1,11 @@
+import { Static, Type } from "@sinclair/typebox";
+
+const {{pascalCase name}}Schema = Type.Object({
+  content: Type.String({
+    default: "rect",
+  }),
+});
+
+export type {{pascalCase name}}State = Static<typeof {{pascalCase name}}Schema>;
+
+export default {{pascalCase name}}Schema;

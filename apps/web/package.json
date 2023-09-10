@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev --turbo",
+    "dev": "next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint --max-warnings 0",
@@ -11,17 +11,22 @@
     "lint:types": "tsc --noEmit"
   },
   "dependencies": {
+    "@sinclair/typebox": "^0.31.8",
     "cn": "workspace:*",
+    "database": "workspace:*",
     "next": "13.4.9",
+    "projects": "workspace:*",
     "react": "^18.2.0",
     "react-dom": "18.2.0",
     "reactflow": "^11.7.4",
     "ui": "workspace:*",
-    "database": "workspace:*"
+    "uuid": "^9.0.0",
+    "zustand": "^4.4.1"
   },
   "devDependencies": {
     "@types/react": "^18.2.0",
     "@types/react-dom": "^18.2.0",
+    "@types/uuid": "^9.0.3",
     "autoprefixer": "10.4.14",
     "eslint": "^7.32.0",
     "eslint-config-custom": "workspace:*",

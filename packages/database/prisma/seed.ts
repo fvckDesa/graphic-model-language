@@ -1,31 +1,20 @@
-import { PrismaClient, Prisma } from "@prisma/client";
+import { PrismaClient } from "@prisma/client";
+import { importProject } from "projects";
+
 const prisma = new PrismaClient();
 
-const rectangleSchema: Prisma.JsonObject = {
-  title: "Product",
-  description: "A product in the catalog",
-  type: "object",
-  properties: {
-    content: {
-      type: "string",
-    },
-  },
-  required: ["content"],
-};
-
 async function main() {
+  await prisma.project.deleteMany();
+  const simple = await importProject("simple");
   const project = await prisma.project.create({
     data: {
-      name: "simple",
-      url: "@/projects/simple",
+      type: "simple",
       nodes: {
         createMany: {
-          data: [
-            {
-              name: "rectangle",
-              schema: rectangleSchema,
-            },
-          ],
+          data: Object.entries(simple).map(([name, { schema }]) => ({
+            name,
+            schema,
+          })),
         },
       },
     },
@@ -33,9 +22,10 @@ async function main() {
 
   await prisma.workspace.create({
     data: {
+      name: "Test",
       project: {
         connect: {
-          name: project.name,
+          type: project.type,
         },
       },
     },

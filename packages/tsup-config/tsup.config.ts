@@ -1,8 +1,8 @@
 import { defineConfig, Options } from "tsup";
-import { react } from "tsup-config";
+import { node } from "./index";
 
 export default defineConfig((options: Options) => ({
-  entry: ["./index.tsx"],
-  ...react,
+  entry: ["./index.ts"],
+  ...node,
   ...options,
 }));

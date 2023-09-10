@@ -2,8 +2,9 @@
   "name": "database",
   "version": "1.0.0",
   "description": "",
+  "type": "module",
   "exports": {
-    "/client": {
+    "./client": {
       "import": "./build/client.js",
       "types": "./build/client.d.ts"
     }
@@ -13,8 +14,8 @@
     "seed": "tsx prisma/seed.ts"
   },
   "scripts": {
-    "build": "tsup",
-    "dev": "tsup --watch",
+    "build": "tsup-node",
+    "dev": "tsup-node --watch",
     "prisma": "prisma"
   },
   "keywords": [],
@@ -27,7 +28,9 @@
     "prisma": "^5.2.0",
     "tsconfig": "workspace:*",
     "tsup": "^7.1.0",
-    "typescript": "^5.1.0"
+    "typescript": "^5.1.0",
+    "projects": "workspace:*",
+    "tsup-config": "workspace:*"
   },
   "dependencies": {
     "@prisma/client": "^5.2.0"

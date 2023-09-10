@@ -1,14 +1,8 @@
 import { defineConfig, Options } from "tsup";
+import { node } from "tsup-config";
 
 export default defineConfig((options: Options) => ({
-  treeshake: true,
-  splitting: true,
-  target: "node18",
   entry: ["./client.ts"],
-  format: ["esm"],
-  dts: true,
-  minify: true,
-  clean: true,
-  outDir: "build",
+  ...node,
   ...options,
 }));
