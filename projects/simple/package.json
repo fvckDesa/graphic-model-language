@@ -5,6 +5,10 @@
   "type": "module",
   "main": "./build/index.js",
   "types": "./build/index.d.ts",
+  "exports": {
+    ".": "./build",
+    "./style.css": "./build/index.css"
+  },
   "scripts": {
     "build": "tsup",
     "dev": "tsup --watch",
@@ -23,11 +27,16 @@
   },
   "devDependencies": {
     "@types/react": "^18.2.0",
+    "autoprefixer": "10.4.14",
+    "esbuild-postcss": "^0.0.4",
+    "eslint": "^7.32.0",
+    "eslint-config-custom": "workspace:*",
+    "postcss": "8.4.25",
+    "tailwind-config": "workspace:*",
+    "tailwindcss": "^3.3.3",
     "tsconfig": "workspace:*",
     "tsup": "^7.1.0",
     "tsup-config": "workspace:*",
-    "eslint": "^7.32.0",
-    "eslint-config-custom": "workspace:*",
     "typescript": "^5.1.0"
   }
 }

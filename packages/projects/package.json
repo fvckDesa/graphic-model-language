@@ -13,7 +13,8 @@
     "lint:types": "tsc --noEmit"
   },
   "dependencies": {
-    "@projects/simple": "workspace:*"
+    "@projects/simple": "workspace:*",
+    "@sinclair/typebox": "^0.31.8"
   },
   "peerDependencies": {
     "react": "^18.2.0"

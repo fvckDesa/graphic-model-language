@@ -1,6 +1,8 @@
 import { ComponentType } from "react";
+import { TObject, TypeGuard } from "@sinclair/typebox";
 
 type ProjectPkg = `@projects/${string}`;
+export type Schema = TObject;
 
 interface Es6Module {
   [exp: string]: unknown;
@@ -15,7 +17,7 @@ export interface NodeProps {
 
 export interface NodeDef {
   Node: ComponentType<NodeProps>;
-  schema: object;
+  schema: Schema;
 }
 
 export type Project = Record<string, NodeDef>;
@@ -49,8 +51,7 @@ export function isProject(obj: unknown): obj is Project {
       ([name, { Node, schema }]) =>
         typeof name === "string" &&
         typeof Node === "function" &&
-        schema &&
-        typeof schema === "object"
+        TypeGuard.TObject(schema)
     )
   );
 }

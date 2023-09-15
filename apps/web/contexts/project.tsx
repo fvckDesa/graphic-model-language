@@ -7,7 +7,7 @@ import {
   useState,
   useMemo,
 } from "react";
-import { importProject, Project } from "projects";
+import { importProject, Project, Schema } from "projects";
 import { NodeTypes } from "reactflow";
 import { withNodeWrapper } from "@/hoc/withNodeWrapper";
 
@@ -63,14 +63,14 @@ export function useProjectNodes(): NodeTypes {
   return nodes;
 }
 
-export function useSchema(node: string): object {
+export function useSchema(node: string): Schema {
   const { project } = useProject();
 
   if (!(node in project)) {
     throw new Error(`Node '${node}' not exists`);
   }
 
-  const schema = useMemo(() => project[node], [project]);
+  const schema = useMemo(() => project[node].schema, [project, node]);
 
   return schema;
 }

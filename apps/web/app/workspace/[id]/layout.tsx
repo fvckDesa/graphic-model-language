@@ -20,6 +20,8 @@ export default async function WorkspaceLayout({
       edges: true,
     },
   });
+  //TODO add not-found
+  if (!workspace) return;
 
   return (
     <Providers projectType={workspace.projectType}>
