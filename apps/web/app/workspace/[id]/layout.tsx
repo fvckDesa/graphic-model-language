@@ -24,7 +24,7 @@ export default async function WorkspaceLayout({
   if (!workspace) return;
 
   return (
-    <Providers projectType={workspace.projectType}>
+    <Providers projectType={workspace.projectType} workspaceId={params.id}>
       <div className="grid h-full w-full grid-cols-[1fr,3fr]">
         <aside className="border-r-2 border-gray-400">
           <NodeList className="p-4" />

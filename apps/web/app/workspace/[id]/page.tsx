@@ -3,7 +3,7 @@ import DropNodeArea from "@/components/DropNodeArea";
 import Portal from "@/components/Portal";
 import StateModal from "@/components/StateModal";
 import { useProjectNodes } from "@/contexts/project";
-import { useEditor } from "@/store";
+import { useWorkspace } from "@/contexts/workspace";
 import { useCallback } from "react";
 import {
   Background,
@@ -24,9 +24,9 @@ export default function WorkspacePage() {
     connect,
     setActive,
     updateActiveState,
-  } = useEditor();
+  } = useWorkspace();
 
-  const activeNode = useEditor((state) =>
+  const activeNode = useWorkspace((state) =>
     state.nodes.find((node) => node.id === state.active)
   );
 
@@ -39,7 +39,7 @@ export default function WorkspacePage() {
 
   function onSubmit(state: object) {
     updateActiveState(state);
-    setActive(null);
+    setActive("");
   }
 
   return (
@@ -54,16 +54,18 @@ export default function WorkspacePage() {
         onNodeDoubleClick={onNodeDoubleClick}
       >
         <Background />
-        <Portal>
-          {activeNode && activeNode.type && (
-            <StateModal
-              nodeType={activeNode.type}
-              state={activeNode.data}
-              onCancel={() => setActive(null)}
-              onSubmit={onSubmit}
-            />
-          )}
-        </Portal>
+        {
+          <Portal>
+            {activeNode && activeNode.type && (
+              <StateModal
+                nodeType={activeNode.type}
+                state={activeNode.data}
+                onCancel={() => setActive("")}
+                onSubmit={onSubmit}
+              />
+            )}
+          </Portal>
+        }
       </ReactFlow>
     </DropNodeArea>
   );

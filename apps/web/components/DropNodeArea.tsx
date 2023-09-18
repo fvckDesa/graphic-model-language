@@ -1,13 +1,13 @@
 "use client";
 import { DragEvent, PropsWithChildren, useCallback, useRef } from "react";
 import { useReactFlow } from "reactflow";
-import { useEditor } from "@/store";
+import { useWorkspace } from "@/contexts/workspace";
 import { v4 as uuidv4 } from "uuid";
 
 function DropNodeArea({ children }: PropsWithChildren) {
-  const ref = useRef<HTMLDivElement>();
+  const ref = useRef<HTMLDivElement>(null);
   const { project: reactFlowProject } = useReactFlow();
-  const { changeNodes } = useEditor();
+  const { changeNodes } = useWorkspace();
 
   const onDragOver = useCallback((e: DragEvent) => {
     e.preventDefault();
