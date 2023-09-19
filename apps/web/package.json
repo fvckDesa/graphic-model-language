@@ -33,14 +33,8 @@
     "socket.io-client": "^4.7.2",
     "tailwind-merge": "^1.14.0",
     "tailwindcss-animate": "^1.0.7",
-    "ui": "workspace:*",
     "uuid": "^9.0.0",
-    "y-websocket": "^1.5.0",
-    "yjs": "^13.6.7",
-    "zod": "^3.22.2",
-    "zustand": "^4.4.1",
-    "zustand-middleware-yjs": "workspace:*",
-    "zustand-yjs": "^0.0.14"
+    "zustand": "^4.4.1"
   },
   "devDependencies": {
     "@types/react": "^18.2.0",

@@ -1,6 +1,10 @@
 import type { {{pascalCase name}}State } from "./state";
 
-function {{pascalCase name}}(state: {{pascalCase name}}State) {
+interface {{pascalCase name}}Props {
+  state: {{pascalCase name}}State
+}
+
+function {{pascalCase name}}({ state }: {{pascalCase name}}Props) {
   return <div>{{pascalCase name}}</div>;
 }
 

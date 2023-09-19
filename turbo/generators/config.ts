@@ -24,13 +24,18 @@ export default function generator(plop: PlopTypes.NodePlopAPI): void {
     actions: [
       {
         type: "add",
-        path: "/projects/{{project}}/nodes/{{pascalCase name}}/Node.tsx",
-        templateFile: "templates/node.hbs",
+        path: "projects/{{project}}/nodes/{{pascalCase name}}/Node.tsx",
+        templateFile: "templates/project/node.hbs",
       },
       {
         type: "add",
-        path: "/projects/{{project}}/nodes/{{pascalCase name}}/state.ts",
-        templateFile: "templates/state.hbs",
+        path: "projects/{{project}}/nodes/{{pascalCase name}}/state.ts",
+        templateFile: "templates/project/state.hbs",
+      },
+      {
+        type: "add",
+        path: "projects/{{project}}/nodes/{{pascalCase name}}/index.ts",
+        templateFile: "templates/project/index.hbs",
       },
     ],
   });

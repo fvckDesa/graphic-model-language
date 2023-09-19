@@ -1,1 +1,4 @@
-module.exports = require("./tailwind.config");
+module.exports = {
+  base: require("./base"),
+  project: require("./project"),
+};
