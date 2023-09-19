@@ -1,13 +1,10 @@
 import { StateCreator } from "zustand";
 import { EditorSlice } from "./editorSlice";
 
-export interface WorkspaceState {
-  active: string;
-}
+export interface WorkspaceState {}
 
 export interface WorkspaceState {
-  setActive: (id: string) => void;
-  updateActiveState: (state: object) => void;
+  updateState: (id: string, state: object) => void;
 }
 
 export type WorkspaceSlice = WorkspaceState & WorkspaceState;
@@ -18,14 +15,10 @@ export const workspaceSlice: StateCreator<
   [],
   WorkspaceSlice
 > = (set, get) => ({
-  active: "",
-  setActive: (id) => {
-    set({ active: !id || get().active === id ? "" : id });
-  },
-  updateActiveState: (state) => {
+  updateState: (id, state) => {
     set({
       nodes: get().nodes.map((node) => {
-        if (node.id === get().active) {
+        if (node.id === id) {
           node.data = state;
         }
 

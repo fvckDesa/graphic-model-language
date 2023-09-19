@@ -4,6 +4,7 @@ const RectangleSchema = Type.Object({
   content: Type.String({
     default: "rect",
     minLength: 1,
+    description: "Rectangle content string",
   }),
 });
 

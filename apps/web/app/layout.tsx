@@ -1,5 +1,4 @@
 import "./globals.css";
-import "ui/styles.css";
 import "reactflow/dist/style.css";
 
 import { ReactNode } from "react";

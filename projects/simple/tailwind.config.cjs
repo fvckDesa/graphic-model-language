@@ -5,4 +5,7 @@ module.exports = {
   content: ["./nodes/**/*.{js,ts,jsx,tsx}"],
   presets: [sharedConfig],
   plugins: [],
+  corePlugins: {
+    preflight: false,
+  },
 };
