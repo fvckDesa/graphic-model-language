@@ -1,21 +1,24 @@
 import { ComponentType } from "react";
 import { NodeProps as ReactFlowNodeProps } from "reactflow";
-import { NodeProps } from "projects";
+import { NodeProps, State, StateSchema } from "api";
 import { useState, useCallback } from "react";
 import StateModal from "@/components/StateModal";
 import { useWorkspace } from "@/contexts/workspace";
 import { useSchema } from "@/contexts/project";
 
-export function withNodeWrapper(WrappedComponent: ComponentType<NodeProps>) {
+export function withNodeWrapper(
+  WrappedComponent: ComponentType<NodeProps<State<StateSchema>>>
+) {
   return function NodeWrapper({ id, type, data }: ReactFlowNodeProps) {
     const schema = useSchema(type);
     const [isOpen, setIsOpen] = useState(false);
     const updateState = useWorkspace((state) => state.updateState);
-
     const onDoubleClick = useCallback(() => setIsOpen(true), [setIsOpen]);
 
     const onSubmit = useCallback(
-      (state: object) => updateState(id, state),
+      (state: State<StateSchema>) => {
+        updateState(id, state);
+      },
       [updateState, id]
     );
 

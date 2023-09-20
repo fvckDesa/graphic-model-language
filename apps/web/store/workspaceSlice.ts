@@ -3,11 +3,11 @@ import { EditorSlice } from "./editorSlice";
 
 export interface WorkspaceState {}
 
-export interface WorkspaceState {
+export interface WorkspaceAction {
   updateState: (id: string, state: object) => void;
 }
 
-export type WorkspaceSlice = WorkspaceState & WorkspaceState;
+export type WorkspaceSlice = WorkspaceState & WorkspaceAction;
 
 export const workspaceSlice: StateCreator<
   WorkspaceSlice & EditorSlice,

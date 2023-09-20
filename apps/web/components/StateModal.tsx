@@ -20,12 +20,7 @@ import {
 } from "./schema-fields";
 import { X } from "lucide-react";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import {
-  State,
-  StateSchema,
-  StateSchemaProperty,
-  getStateSchemaPropertyKind,
-} from "api";
+import { State, StateSchema, StateSchemaProperty, Kind } from "api";
 
 interface StateModalProps {
   schema: StateSchema;
@@ -47,7 +42,7 @@ function StateModal({
     values: state,
   });
 
-  const internalSubmit = useCallback<SubmitHandler<object>>(
+  const internalSubmit = useCallback<SubmitHandler<State<StateSchema>>>(
     (data, e) => {
       onSubmit(data, e);
       onOpenChange(false);
@@ -76,7 +71,7 @@ function StateModal({
             <ScrollArea className="flex-1" type="always">
               <div className="px-2">
                 {Object.entries(schema.properties).map(([name, property]) => (
-                  <StateField name={name} property={property} />
+                  <StateField key={name} name={name} property={property} />
                 ))}
               </div>
             </ScrollArea>
@@ -103,9 +98,7 @@ interface StateFieldProps {
 }
 
 function StateField({ name, property }: StateFieldProps) {
-  const kind = getStateSchemaPropertyKind(property);
-
-  switch (kind) {
+  switch (property[Kind]) {
     case "String":
       return <StringField name={name} stateProperty={property} />;
     case "Number":
@@ -115,6 +108,6 @@ function StateField({ name, property }: StateFieldProps) {
     case "Enum":
       return <EnumField name={name} stateProperty={property} />;
     default:
-      throw new Error(`Schema kind: ${kind} is not supported`);
+      throw new Error(`Schema kind: ${property[Kind]} is not supported`);
   }
 }
