@@ -35,10 +35,10 @@ export function isStateSchema(
   return TypeGuard.TObject(stateSchema);
 }
 
-export const StateSchemaType = Object.assign(Type.Object, {
-  String: Type.String,
-  Number: Type.Number,
-  Boolean: Type.Boolean,
+export const StateSchemaType = Object.assign(Type.Object.bind(Type), {
+  String: Type.String.bind(Type),
+  Number: Type.Number.bind(Type),
+  Boolean: Type.Boolean.bind(Type),
   Enum,
 });
 
