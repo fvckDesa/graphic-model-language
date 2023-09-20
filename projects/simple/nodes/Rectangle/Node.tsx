@@ -1,10 +1,7 @@
 import type { RectangleState } from "./state";
+import type { NodeProps } from "api";
 
-interface RectangleProps {
-  state: RectangleState;
-}
-
-function Rectangle({ state }: RectangleProps) {
+function Rectangle({ state }: NodeProps<RectangleState>) {
   return (
     <div className="flex items-center justify-center rounded border border-slate-500 bg-white px-6 py-4">
       {state.content}

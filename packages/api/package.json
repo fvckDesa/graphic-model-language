@@ -1,5 +1,5 @@
 {
-  "name": "projects",
+  "name": "api",
   "version": "0.0.0",
   "type": "module",
   "main": "./build/index.js",
@@ -12,21 +12,15 @@
     "lint:fix": "eslint **/*.{ts,tsx} --max-warnings 0 --fix",
     "lint:types": "tsc --noEmit"
   },
-  "dependencies": {
-    "@projects/simple": "workspace:*",
-    "@projects/uml-class-diagram": "workspace:*"
-  },
   "peerDependencies": {
-    "react": "^18.2.0",
-    "api": "workspace:*"
+    "@sinclair/typebox": "^0.31.8"
   },
   "devDependencies": {
-    "@types/react": "^18.2.0",
     "eslint": "^7.32.0",
     "eslint-config-custom": "workspace:*",
     "tsconfig": "workspace:*",
     "tsup": "^7.1.0",
-    "tsup-config": "workspace:*",
-    "typescript": "^5.1.0"
+    "typescript": "^5.1.0",
+    "tsup-config": "workspace:*"
   }
 }

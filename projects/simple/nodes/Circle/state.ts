@@ -1,11 +1,11 @@
-import { Static, Type } from "@sinclair/typebox";
+import { State, StateSchemaType } from "api";
 
-const CircleSchema = Type.Object({
-  content: Type.String({
+const CircleSchema = StateSchemaType({
+  content: StateSchemaType.String({
     default: "circle",
   }),
 });
 
-export type CircleState = Static<typeof CircleSchema>;
+export type CircleState = State<typeof CircleSchema>;
 
 export default CircleSchema;

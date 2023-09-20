@@ -34,7 +34,8 @@
     "tailwind-merge": "^1.14.0",
     "tailwindcss-animate": "^1.0.7",
     "uuid": "^9.0.0",
-    "zustand": "^4.4.1"
+    "zustand": "^4.4.1",
+    "api": "workspace:*"
   },
   "devDependencies": {
     "@types/react": "^18.2.0",
