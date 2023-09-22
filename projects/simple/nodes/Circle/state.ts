@@ -1,9 +1,10 @@
-import { State, StateSchemaType } from "api";
+import { State, schema, stringProperty } from "api";
 
-const CircleSchema = StateSchemaType({
-  content: StateSchemaType.String({
-    default: "circle",
-  }),
+const CircleSchema = schema({
+  name: "circle",
+  properties: {
+    content: stringProperty({ default: "circle" }),
+  },
 });
 
 export type CircleState = State<typeof CircleSchema>;

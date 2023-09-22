@@ -3,7 +3,7 @@ import type { NodeProps } from "api";
 
 function Circle({ state }: NodeProps<CircleState>) {
   return (
-    <div className="flex aspect-square items-center justify-center rounded-full border border-slate-500 bg-white p-6">
+    <div className="simple-flex simple-aspect-square simple-items-center simple-justify-center simple-rounded-full simple-border simple-border-slate-500 simple-bg-white simple-p-6">
       {state.content}
     </div>
   );

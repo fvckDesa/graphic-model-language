@@ -3,7 +3,7 @@ import type { NodeProps } from "api";
 
 function Rectangle({ state }: NodeProps<RectangleState>) {
   return (
-    <div className="flex items-center justify-center rounded border border-slate-500 bg-white px-6 py-4">
+    <div className="simple-flex simple-items-center simple-justify-center simple-rounded simple-border simple-border-slate-500 simple-bg-white simple-px-6 simple-py-4">
       {state.content}
     </div>
   );

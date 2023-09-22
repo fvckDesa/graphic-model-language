@@ -1,5 +1,5 @@
 import { ComponentType } from "react";
-import { NodeProps, State, StateSchema, isStateSchema } from "api";
+import { NodeProps, Schema, GenericState, isSchema } from "api";
 
 type ProjectPkg = `@projects/${string}`;
 
@@ -8,20 +8,40 @@ interface Es6Module {
   default: unknown;
 }
 
-export const ProjectList = ["@projects/simple"] satisfies ProjectPkg[];
+export const ProjectList = [
+  "@projects/simple",
+  "@projects/uml-class-diagram",
+] satisfies ProjectPkg[];
 
 export interface NodeDef {
-  Node: ComponentType<NodeProps<State<StateSchema>>>;
-  schema: StateSchema;
+  Node: ComponentType<NodeProps<GenericState>>;
+  schema: Schema;
 }
 
 export type Project = Record<string, NodeDef>;
 
-export async function importProject(name: string): Promise<Project> {
+export async function importProject(
+  name: string,
+  css = false
+): Promise<Project> {
   let module: Es6Module;
   switch (name) {
     case "simple": {
       module = await import("@projects/simple");
+      if (css) {
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore 2307
+        await import("@projects/simple/style.css");
+      }
+      break;
+    }
+    case "uml-class-diagram": {
+      module = await import("@projects/uml-class-diagram");
+      if (css) {
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore 2307
+        await import("@projects/uml-class-diagram/style.css");
+      }
       break;
     }
     default: {
@@ -46,7 +66,7 @@ export function isProject(obj: unknown): obj is Project {
       ([name, { Node, schema }]) =>
         typeof name === "string" &&
         typeof Node === "function" &&
-        isStateSchema(schema)
+        isSchema(schema)
     )
   );
 }

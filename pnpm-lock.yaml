@@ -247,6 +247,9 @@ importers:
       '@types/node':
         specifier: ^20.5.7
         version: 20.5.7
+      api:
+        specifier: workspace:*
+        version: link:../api
       eslint:
         specifier: ^7.32.0
         version: 7.32.0

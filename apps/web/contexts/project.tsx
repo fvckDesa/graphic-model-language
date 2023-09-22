@@ -7,9 +7,10 @@ import {
   useState,
   useMemo,
 } from "react";
-import { importProject, Project, Schema } from "projects";
+import { importProject, Project } from "projects";
 import { NodeTypes } from "reactflow";
 import { withNodeWrapper } from "@/hoc/withNodeWrapper";
+import { Schema } from "api";
 
 interface ProjectContextProps {
   project: Project;
@@ -29,7 +30,7 @@ export default function ProjectProvider({
   const [project, setProject] = useState<Project>({});
 
   useEffect(() => {
-    importProject(type).then(setProject);
+    importProject(type, true).then(setProject);
   }, [type]);
 
   return (
