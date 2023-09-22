@@ -1,6 +1,6 @@
 import { ComponentPropsWithoutRef } from "react";
 import {
-  StateProperty,
+  Property,
   StringProperty,
   NumberProperty,
   BooleanProperty,
@@ -25,7 +25,7 @@ import {
 } from "@/components/ui/select";
 import { cn } from "cn";
 
-export interface StateField<P extends StateProperty>
+export interface StateField<P extends Property>
   extends Omit<ComponentPropsWithoutRef<typeof FormField>, "render"> {
   stateProperty: P;
 }
@@ -45,8 +45,10 @@ export function StringField({
           <FormControl>
             <Input
               type="text"
+              autoComplete="off"
+              spellCheck={false}
               className={cn({
-                "border-2 border-red-500": !!error,
+                "border-destructive border-2": !!error,
               })}
               {...field}
             />
@@ -77,9 +79,10 @@ export function NumberField({
             <Input
               type="number"
               className={cn({
-                "border-2 border-red-500": !!error,
+                "border-destructive border-2": !!error,
               })}
               {...field}
+              onChange={(event) => field.onChange(+event.target.value)}
             />
           </FormControl>
           <FormDescription className="overflow-hidden text-ellipsis whitespace-nowrap px-2">
@@ -100,15 +103,23 @@ export function BooleanField({
   return (
     <FormField
       {...fieldProps}
-      name="mobile"
+      name={name}
       render={({ field }) => (
-        <FormItem className="flex items-center gap-2">
-          <FormControl>
-            <Checkbox checked={field.value} onCheckedChange={field.onChange} />
-          </FormControl>
-          <FormLabel className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
-            {name}
-          </FormLabel>
+        <FormItem>
+          <div className="flex items-center gap-2 pt-4">
+            <FormControl>
+              <Checkbox
+                checked={field.value}
+                onCheckedChange={field.onChange}
+              />
+            </FormControl>
+            <FormLabel className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+              {name}
+            </FormLabel>
+          </div>
+          <FormDescription className="overflow-hidden text-ellipsis whitespace-nowrap px-2">
+            {stateProperty.description}
+          </FormDescription>
         </FormItem>
       )}
     />
@@ -123,24 +134,26 @@ export function EnumField({
   return (
     <FormField
       {...fieldProps}
-      name="mobile"
+      name={name}
       render={({ field }) => (
         <FormItem>
           <FormLabel>{name}</FormLabel>
-          <Select onValueChange={field.onChange} defaultValue={field.value}>
-            <FormControl>
+          <FormControl>
+            <Select onValueChange={field.onChange} defaultValue={field.value}>
               <SelectTrigger>
-                <SelectValue placeholder={`Select ${name}`} />
+                <SelectValue placeholder={`Select ${name}`}>
+                  {field.value}
+                </SelectValue>
               </SelectTrigger>
-            </FormControl>
-            <SelectContent>
-              {stateProperty.enum.map((value) => (
-                <SelectItem key={value} value={value}>
-                  {value}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
+              <SelectContent>
+                {stateProperty.enum.map((value) => (
+                  <SelectItem key={value} value={value}>
+                    {value}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </FormControl>
           <FormMessage />
         </FormItem>
       )}

@@ -1,7 +1,7 @@
 import { PropsWithChildren } from "react";
 import Providers from "@/components/Providers";
 import NodeList from "@/components/NodeList";
-import WorkspaceTree from "@/components/WorkspaceTree";
+import EditorTree from "@/components/EditorTree";
 import { prisma } from "database/client";
 
 interface WorkspaceProps {
@@ -28,7 +28,7 @@ export default async function WorkspaceLayout({
         </aside>
         <main>{children}</main>
         <aside className="border-l-2 border-gray-400 p-4">
-          <WorkspaceTree />
+          <EditorTree />
         </aside>
       </div>
     </Providers>

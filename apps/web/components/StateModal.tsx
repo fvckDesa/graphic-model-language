@@ -1,6 +1,6 @@
 "use client";
 import { typeboxResolver } from "@hookform/resolvers/typebox";
-import { useCallback } from "react";
+import { PropsWithChildren, useCallback, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
@@ -11,6 +11,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogClose,
+  DialogTrigger,
 } from "@/components/ui/dialog";
 import {
   StringField,
@@ -20,34 +21,33 @@ import {
 } from "./schema-fields";
 import { X } from "lucide-react";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { State, StateSchema, StateSchemaProperty, Kind } from "api";
+import { GenericState, Schema, Property, Kind } from "api";
+import { Value } from "@sinclair/typebox/value";
 
 interface StateModalProps {
-  schema: StateSchema;
-  state: State<StateSchema>;
-  open: boolean;
-  onOpenChange: (open: boolean) => void;
-  onSubmit: SubmitHandler<State<StateSchema>>;
+  schema: Schema<Record<string, Property>>;
+  state?: GenericState;
+  onSubmit: SubmitHandler<GenericState>;
 }
 
 function StateModal({
   schema,
   state,
-  open,
-  onOpenChange,
+  children,
   onSubmit,
-}: StateModalProps) {
+}: PropsWithChildren<StateModalProps>) {
+  const [open, setOpen] = useState(false);
   const form = useForm({
     resolver: typeboxResolver(schema),
     values: state,
   });
 
-  const internalSubmit = useCallback<SubmitHandler<State<StateSchema>>>(
+  const internalSubmit = useCallback<SubmitHandler<GenericState>>(
     (data, e) => {
       onSubmit(data, e);
-      onOpenChange(false);
+      setOpen(false);
     },
-    [onSubmit, onOpenChange]
+    [onSubmit, setOpen]
   );
 
   return (
@@ -55,10 +55,11 @@ function StateModal({
       <Dialog
         open={open}
         onOpenChange={(open) => {
-          onOpenChange(open);
-          form.reset(state);
+          form.reset();
+          setOpen(open);
         }}
       >
+        <DialogTrigger asChild>{children}</DialogTrigger>
         <DialogContent className="flex h-[80vh] flex-col" asChild>
           <form onSubmit={form.handleSubmit(internalSubmit)}>
             <DialogHeader className="flex flex-row items-center justify-between space-y-0">
@@ -69,7 +70,7 @@ function StateModal({
               </DialogClose>
             </DialogHeader>
             <ScrollArea className="flex-1" type="always">
-              <div className="px-2">
+              <div className="flex flex-col gap-4 px-2">
                 {Object.entries(schema.properties).map(([name, property]) => (
                   <StateField key={name} name={name} property={property} />
                 ))}
@@ -94,7 +95,7 @@ export default StateModal;
 
 interface StateFieldProps {
   name: string;
-  property: StateSchemaProperty;
+  property: Property;
 }
 
 function StateField({ name, property }: StateFieldProps) {
