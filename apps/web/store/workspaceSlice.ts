@@ -37,7 +37,7 @@ export const workspaceSlice: StateCreator<
             ValuePointer.Set(newState, path, state);
           }
 
-          node.data = newState;
+          return { ...node, data: newState };
         }
 
         return node;
@@ -67,7 +67,7 @@ export const workspaceSlice: StateCreator<
           }
 
           ValuePointer.Set(newState, `${path}/${arr.length}`, state);
-          node.data = newState;
+          return { ...node, data: newState };
         }
 
         return node;
@@ -104,7 +104,7 @@ export const workspaceSlice: StateCreator<
 
             ValuePointer.Delete(newState, path);
 
-            node.data = newState;
+            return { ...node, data: newState };
           }
           return node;
         }),
