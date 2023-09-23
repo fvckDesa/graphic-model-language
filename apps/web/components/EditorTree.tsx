@@ -150,7 +150,10 @@ function StateLeaf({ schema: rootSchema, path }: StateLeafProps) {
                 <AddState
                   schema={schema}
                   onSubmit={(state) =>
-                    rootLeaf.create(state, `${path}/${schema.title}`)
+                    rootLeaf.create(
+                      { ...Value.Create(schema), ...state },
+                      `${path}/${schema.title}`
+                    )
                   }
                 />
               </TreeAction>
