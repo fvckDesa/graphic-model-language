@@ -9,6 +9,7 @@ import {
   OnEdgesChange,
   OnNodesChange,
   ReactFlow,
+  ConnectionMode,
 } from "reactflow";
 
 export default function WorkspacePage() {
@@ -28,6 +29,7 @@ export default function WorkspacePage() {
         onNodesChange={onNodesChange}
         onEdgesChange={onEdgesChange}
         onConnect={onConnect}
+        connectionMode={ConnectionMode.Loose}
       >
         <Background />
       </ReactFlow>

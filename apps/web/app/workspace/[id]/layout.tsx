@@ -1,3 +1,5 @@
+import "./editor.css";
+
 import { PropsWithChildren } from "react";
 import Providers from "@/components/Providers";
 import NodeList from "@/components/NodeList";

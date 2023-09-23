@@ -14,7 +14,13 @@ export default function NodeList({ className }: NodeListProps) {
   const { project } = useProject();
 
   return (
-    <ul className={cn(className, "flex flex-wrap gap-2")}>
+    <ul
+      className={cn(
+        "no-handle",
+        className,
+        "flex flex-wrap justify-center gap-4"
+      )}
+    >
       {Object.entries<NodeDef>(project).map(([name, { Node, schema }]) => {
         const state = Value.Create(schema);
         return (
