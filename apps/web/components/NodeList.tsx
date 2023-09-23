@@ -2,9 +2,9 @@
 import { useProject } from "@/contexts/project";
 import { DragEvent, PropsWithChildren } from "react";
 import { Value } from "@sinclair/typebox/value";
-import { TSchema } from "@sinclair/typebox";
 import { cn } from "cn";
 import { NodeDef } from "projects";
+import { GenericState } from "api";
 
 interface NodeListProps {
   className?: string;
@@ -16,11 +16,7 @@ export default function NodeList({ className }: NodeListProps) {
   return (
     <ul className={cn(className)}>
       {Object.entries<NodeDef>(project).map(([name, { schema }]) => (
-        <DragNode
-          key={name}
-          type={name}
-          state={Value.Create(schema as TSchema) as object}
-        >
+        <DragNode key={name} type={name} state={Value.Create(schema)}>
           {name}
         </DragNode>
       ))}
@@ -30,7 +26,7 @@ export default function NodeList({ className }: NodeListProps) {
 
 interface DragNodeProps {
   type: string;
-  state: object;
+  state: GenericState;
 }
 
 function DragNode({ type, state, children }: PropsWithChildren<DragNodeProps>) {
