@@ -1,3 +1,4 @@
+import { GenericState } from "api";
 import {
   Node,
   Edge,
@@ -11,12 +12,12 @@ import {
 import { StateCreator } from "zustand";
 
 export interface EditorState {
-  nodes: Node[];
+  nodes: Node<GenericState>[];
   edges: Edge[];
 }
 
 export interface EditorActions {
-  addNodes: (nodes: Node[]) => void;
+  addNodes: (nodes: Node<GenericState>[]) => void;
   changeNodes: (changes: NodeChange[]) => void;
   changeEdges: (changes: EdgeChange[]) => void;
   connect: (connection: Connection) => void;

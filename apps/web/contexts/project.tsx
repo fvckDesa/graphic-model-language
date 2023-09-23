@@ -6,6 +6,7 @@ import {
   useEffect,
   useState,
   useMemo,
+  memo,
 } from "react";
 import { importProject, Project } from "projects";
 import { NodeTypes } from "reactflow";
@@ -55,7 +56,7 @@ export function useProjectNodes(): NodeTypes {
   const nodes = useMemo<NodeTypes>(
     () =>
       Object.entries(project).reduce<NodeTypes>((nodes, [name, { Node }]) => {
-        nodes[name] = withNodeWrapper(Node);
+        nodes[name] = memo(withNodeWrapper(Node));
         return nodes;
       }, {}),
     [project]

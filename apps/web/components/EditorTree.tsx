@@ -19,12 +19,23 @@ import {
   State,
 } from "api";
 import { useSchema } from "@/contexts/project";
-import { useMemo, createContext, useContext, useCallback } from "react";
+import {
+  useMemo,
+  createContext,
+  useContext,
+  useCallback,
+  Fragment,
+  memo,
+} from "react";
 import StateModal from "./StateModal";
 import { Value, ValuePointer } from "@sinclair/typebox/value";
 import { Plus, Settings2, Trash2 } from "lucide-react";
 import { SubmitHandler } from "react-hook-form";
 import { Button } from "./ui/button";
+
+const MemoRootLeaf = memo(RootLeaf, (prev, next) =>
+  Value.Equal(prev.node.data, next.node.data)
+);
 
 function EditorTree() {
   const { nodes } = useWorkspace();
@@ -32,7 +43,7 @@ function EditorTree() {
   return (
     <TreeView>
       {nodes.map((node) => (
-        <RootLeaf key={node.id} node={node} />
+        <MemoRootLeaf key={node.id} node={node} />
       ))}
     </TreeView>
   );
@@ -132,27 +143,27 @@ function StateLeaf({ schema: rootSchema, path }: StateLeafProps) {
       </TreeAction>
       <SubTree>
         {subSchemas.map((schema) => (
-          <TreeLeaf key={schema.title}>
-            <TreeVisual>{schema.title}</TreeVisual>
-            <TreeAction>
-              <AddState
-                schema={schema}
-                onSubmit={(state) =>
-                  rootLeaf.create(state, `${path}/${schema.title}`)
-                }
-              />
-            </TreeAction>
-            <SubTree>
-              {subStates[schema.title!].map((state, idx) => (
-                <StateLeaf
-                  key={`${schema.title}-${idx}`}
+          <Fragment key={schema.title}>
+            <TreeLeaf>
+              <TreeVisual>Add {schema.title}</TreeVisual>
+              <TreeAction>
+                <AddState
                   schema={schema}
-                  state={state}
-                  path={`${path}/${schema.title}/${idx}`}
+                  onSubmit={(state) =>
+                    rootLeaf.create(state, `${path}/${schema.title}`)
+                  }
                 />
-              ))}
-            </SubTree>
-          </TreeLeaf>
+              </TreeAction>
+            </TreeLeaf>
+            {subStates[schema.title!].map((state, idx) => (
+              <StateLeaf
+                key={`${schema.title}-${idx}`}
+                schema={schema}
+                state={state}
+                path={`${path}/${schema.title}/${idx}`}
+              />
+            ))}
+          </Fragment>
         ))}
       </SubTree>
     </TreeLeaf>
