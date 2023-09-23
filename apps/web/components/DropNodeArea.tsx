@@ -3,6 +3,7 @@ import { DragEvent, PropsWithChildren, useCallback, useRef } from "react";
 import { useReactFlow } from "reactflow";
 import { useWorkspace } from "@/contexts/workspace";
 import { v4 as uuidv4 } from "uuid";
+import { GenericState } from "api";
 
 function DropNodeArea({ children }: PropsWithChildren) {
   const ref = useRef<HTMLDivElement>(null);
@@ -23,14 +24,15 @@ function DropNodeArea({ children }: PropsWithChildren) {
         return;
       }
 
-      const { type, state } = JSON.parse(jsonNode) as {
+      const { type, state, size } = JSON.parse(jsonNode) as {
         type: string;
-        state: object;
+        state: GenericState;
+        size: { width: number; height: number };
       };
 
       const position = reactFlowProject({
-        x: e.clientX - wrapperBounds.left,
-        y: e.clientY - wrapperBounds.top,
+        x: e.clientX - wrapperBounds.left - size.width / 2,
+        y: e.clientY - wrapperBounds.top - size.height / 2,
       });
 
       changeNodes([
