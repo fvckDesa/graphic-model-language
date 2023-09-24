@@ -1,7 +1,10 @@
 {
   "extends": "tsconfig/react-library.json",
   "compilerOptions": {
-    "moduleResolution": "Bundler"
+    "moduleResolution": "Bundler",
+    "paths": {
+      "@/*": ["./*"]
+    }
   },
   "include": ["."],
   "exclude": ["dist", "build", "node_modules"]

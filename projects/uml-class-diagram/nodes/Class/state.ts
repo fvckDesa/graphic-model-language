@@ -1,11 +1,17 @@
-import { State, schema, stringProperty } from "api";
+import { State, schema, subSchema, stringProperty } from "api";
+import { AttributeSchema, ConstructorSchema, MethodSchema } from "@/core/state";
 
 const ClassSchema = schema({
   name: "class",
   properties: {
-    content: stringProperty({
+    name: stringProperty({
+      minLength: 1,
       default: "Class",
+      description: "Class name",
     }),
+    attributes: subSchema(AttributeSchema),
+    constructors: subSchema(ConstructorSchema),
+    methods: subSchema(MethodSchema),
   },
 });
 

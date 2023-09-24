@@ -1,19 +1,24 @@
-import type { ClassState } from "./state";
+import type { AbstractState } from "./state";
 import { NodeProps, Handle, Position } from "api";
 import {
   stringifyAttribute,
   stringifyConstructor,
   stringifyMethod,
 } from "@/core/utils";
+import { cn } from "cn";
 
-function Class({ state }: NodeProps<ClassState>) {
+function Abstract({ state }: NodeProps<AbstractState>) {
   return (
     <>
       <Handle type="source" id="top" position={Position.Top} />
       <Handle type="source" id="left" position={Position.Left} />
       <div className="uml-h-full uml-w-full uml-min-w-[220px] uml-cursor-pointer uml-overflow-hidden uml-rounded-lg uml-bg-white uml-font-medium uml-border-2 uml-border-gray-400">
-        <h1 className="uml-border-b-2 uml-border-gray-400 uml-bg-gray-200 uml-p-2 uml-text-center uml-text-lg uml-font-semibold">
-          {state.name}
+        <h1 className="uml-border-b-2 uml-border-gray-400 uml-bg-gray-200 uml-p-2 uml-text-center uml-text-base uml-font-semibold">
+          <span>
+            {"<<"}abstract{">>"}
+          </span>
+          <br />
+          <span className="uml-italic">{state.name}</span>
         </h1>
         <ul className="uml-min-h-[50px] uml-border-b-2 uml-border-gray-400 uml-p-2 uml-transition-all">
           {state.attributes.map((attribute, idx) => (
@@ -27,7 +32,12 @@ function Class({ state }: NodeProps<ClassState>) {
             <li key={idx}>{stringifyConstructor(state.name, constructor)}</li>
           ))}
           {state.methods.map((method, idx) => (
-            <li key={`${method.name}-${idx}`}>{stringifyMethod(method)}</li>
+            <li
+              key={`${method.name}-${idx}`}
+              className={cn({ "uml-italic": method.abstract })}
+            >
+              {stringifyMethod(method)}
+            </li>
           ))}
         </ul>
       </div>
@@ -37,4 +47,4 @@ function Class({ state }: NodeProps<ClassState>) {
   );
 }
 
-export default Class;
+export default Abstract;

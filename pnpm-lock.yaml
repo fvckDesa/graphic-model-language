@@ -420,6 +420,9 @@ importers:
       api:
         specifier: workspace:*
         version: link:../../packages/api
+      cn:
+        specifier: workspace:*
+        version: link:../../packages/cn
       react:
         specifier: ^18.2.0
         version: 18.2.0
