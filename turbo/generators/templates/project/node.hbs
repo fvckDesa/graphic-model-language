@@ -1,10 +1,7 @@
 import type { {{pascalCase name}}State } from "./state";
+import { NodeProps, Handle, Position } from "api";
 
-interface {{pascalCase name}}Props {
-  state: {{pascalCase name}}State
-}
-
-function {{pascalCase name}}({ state }: {{pascalCase name}}Props) {
+function {{pascalCase name}}({ state }: NodeProps<{{pascalCase name}}State>) {
   return <div>{{pascalCase name}}</div>;
 }
 

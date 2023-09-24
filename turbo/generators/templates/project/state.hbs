@@ -1,11 +1,14 @@
-import { Static, Type } from "@sinclair/typebox";
+import { State, schema, stringProperty } from "api";
 
-const {{pascalCase name}}Schema = Type.Object({
-  content: Type.String({
-    default: "{{pascalCase name}}",
-  }),
+const {{pascalCase name}}Schema = schema({
+  name: "{{lowerCase name}}",
+  properties: {
+    content: stringProperty({
+      default: "{{lowerCase name}}"
+    }),
+  }
 });
 
-export type {{pascalCase name}}State = Static<typeof {{pascalCase name}}Schema>;
+export type {{pascalCase name}}State = State<typeof {{pascalCase name}}Schema>;
 
 export default {{pascalCase name}}Schema;
