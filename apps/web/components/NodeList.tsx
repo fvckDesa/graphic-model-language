@@ -44,7 +44,16 @@ function DragNode({ type, state, children }: PropsWithChildren<DragNodeProps>) {
 
   useLayoutEffect(() => {
     if (!wrapperRef.current || !contentRef.current) return;
-    applyScale(wrapperRef.current, contentRef.current);
+    const observer = new ResizeObserver(() => {
+      if (!wrapperRef.current || !contentRef.current) return;
+      applyScale(wrapperRef.current, contentRef.current);
+    });
+
+    observer.observe(wrapperRef.current);
+
+    return () => {
+      observer.disconnect();
+    };
   }, [wrapperRef, contentRef]);
 
   function onDragStart(e: DragEvent) {
