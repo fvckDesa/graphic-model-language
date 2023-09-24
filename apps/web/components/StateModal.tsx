@@ -22,7 +22,6 @@ import {
 import { X } from "lucide-react";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { GenericState, Schema, Property, Kind } from "api";
-import { Value } from "@sinclair/typebox/value";
 
 interface StateModalProps {
   schema: Schema<Record<string, Property>>;

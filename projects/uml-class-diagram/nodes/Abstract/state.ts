@@ -8,20 +8,25 @@ import {
 } from "api";
 import { AttributeSchema, ConstructorSchema, MethodSchema } from "@/core/state";
 
-const AbstractMethodSchema = merge([
-  schema({
-    name: "methods",
-    properties: {
-      abstract: booleanProperty({
-        description: "Indicate if it's an abstract method",
-      }),
-    },
-  }),
-  MethodSchema,
-]);
+const AbstractMethodSchema = merge({
+  label: "name",
+  schemas: [
+    schema({
+      id: "methods",
+      label: "method",
+      properties: {
+        abstract: booleanProperty({
+          description: "Indicate if it's an abstract method",
+        }),
+      },
+    }),
+    MethodSchema,
+  ],
+});
 
 const AbstractSchema = schema({
-  name: "abstract",
+  id: "abstract",
+  label: "name",
   properties: {
     name: stringProperty({
       minLength: 1,

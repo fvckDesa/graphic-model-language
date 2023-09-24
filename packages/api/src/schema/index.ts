@@ -8,23 +8,33 @@ import {
   TPick,
   TComposite,
 } from "@sinclair/typebox";
-import { Property } from "./properties";
+import { Property, StringProperty } from "./properties";
 export * from "./properties";
 
 export type Properties = Record<string, Property | TArray<Schema>>;
 
 export type Schema<P extends Properties = Properties> = TObject<P>;
 
+type StringProperties<P extends Properties> = {
+  [K in keyof P as P[K] extends StringProperty ? K : never]: P[K];
+};
+
+type Label<S extends string | number | symbol> =
+  | Exclude<S, number | symbol>
+  | (NonNullable<unknown> & string);
+
 export interface SchemaOptions<P extends Properties> {
-  name: string;
+  id: string;
   properties: P;
+  label: Label<keyof StringProperties<P>>;
 }
 
 export function schema<P extends Properties>({
-  name,
+  id,
   properties,
+  label,
 }: SchemaOptions<P>): Schema<P> {
-  return Type.Object(properties, { title: name });
+  return Type.Object(properties, { title: label || id, $id: id });
 }
 
 export type SubSchema<P extends Properties = Properties> = TArray<Schema<P>>;
@@ -62,8 +72,15 @@ export type SchemaPick<S extends Schema> = TPick<S, string>;
 export const pick = Type.Pick.bind(Type);
 
 export type SchemaMerge<S extends Schema[]> = TComposite<S>;
+
+type SchemaToProperties<S> = S extends Schema<infer P> ? P : never;
+type StringPropertiesMerge<S extends Schema[]> = {
+  [K in keyof S]: keyof StringProperties<SchemaToProperties<S[K]>>;
+}[number];
+
 export interface MergeOptions<S extends Schema[]> {
-  name?: string;
+  id?: string;
+  label?: Label<StringPropertiesMerge<S>>;
   schemas: [...S];
 }
 
@@ -78,9 +95,15 @@ export function merge<S extends Schema[]>(
     ? schemasOrOptions
     : schemasOrOptions.schemas;
 
-  let name = schemas.length > 0 ? schemas[0].title! : "";
-  if ("name" in schemasOrOptions && schemasOrOptions.name) {
-    name = schemasOrOptions.name;
+  let id = schemas.length > 0 && schemas[0].$id ? schemas[0].$id : "";
+  let label = schemas.length > 0 && schemas[0].title ? schemas[0].title : id;
+
+  if ("id" in schemasOrOptions && schemasOrOptions.id) {
+    id = schemasOrOptions.id;
   }
-  return Type.Composite(schemas, { title: name });
+  if ("label" in schemasOrOptions && schemasOrOptions.label) {
+    label = schemasOrOptions.label;
+  }
+
+  return Type.Composite(schemas, { title: label, $id: id });
 }

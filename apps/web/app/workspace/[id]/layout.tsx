@@ -4,7 +4,6 @@ import { PropsWithChildren } from "react";
 import Providers from "@/components/Providers";
 import NodeList from "@/components/NodeList";
 import EditorTree from "@/components/EditorTree";
-import { prisma } from "database/client";
 
 interface WorkspaceProps {
   params: { id: string };
@@ -17,7 +16,7 @@ export default async function WorkspaceLayout({
   const workspace = {
     id: "abc",
     name: "Test",
-    projectType: "simple",
+    projectType: "uml-class-diagram",
   };
   //TODO add not-found
   if (!workspace) return;
@@ -29,7 +28,7 @@ export default async function WorkspaceLayout({
           <NodeList className="p-4" />
         </aside>
         <main>{children}</main>
-        <aside className="border-l-2 border-gray-400 p-4">
+        <aside className="w-full overflow-hidden border-l-2 border-gray-400 p-4">
           <EditorTree />
         </aside>
       </div>

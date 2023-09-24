@@ -9,7 +9,8 @@ import {
 } from "api";
 
 const RectangleSchema = schema({
-  name: "rectangle",
+  id: "rectangle",
+  label: "content",
   properties: {
     content: stringProperty({
       default: "rectangle",
@@ -17,7 +18,8 @@ const RectangleSchema = schema({
       description: "rectangle content",
     }),
     sub: subSchema({
-      name: "sub",
+      id: "sub",
+      label: "sub",
       properties: {
         str: stringProperty(),
         num: numberProperty({ description: "num" }),

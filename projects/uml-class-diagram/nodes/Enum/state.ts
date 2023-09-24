@@ -1,7 +1,8 @@
 import { State, schema, subSchema, stringProperty } from "api";
 
 const LiteralSchema = schema({
-  name: "literals",
+  id: "literals",
+  label: "name",
   properties: {
     name: stringProperty({
       minLength: 1,
@@ -17,7 +18,8 @@ const LiteralSchema = schema({
 export type Literal = State<typeof LiteralSchema>;
 
 const EnumSchema = schema({
-  name: "enum",
+  id: "enum",
+  label: "name",
   properties: {
     name: stringProperty({
       minLength: 1,

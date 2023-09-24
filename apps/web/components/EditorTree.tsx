@@ -75,6 +75,7 @@ interface RootLeafProps {
 }
 
 function RootLeaf({ node }: RootLeafProps) {
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const schema = useSchema(node.type!);
   const { createSubState, updateState, deleteState } = useWorkspace(
     (state) => ({
@@ -121,7 +122,12 @@ function StateLeaf({ schema: rootSchema, path }: StateLeafProps) {
 
   return (
     <TreeLeaf>
-      <TreeVisual>{schema.title}</TreeVisual>
+      {/* eslint-disable-next-line @typescript-eslint/no-non-null-assertion */}
+      <TreeVisual className="text-sm">
+        {typeof state[schema.title!] === "string"
+          ? state[schema.title!]
+          : schema.title}
+      </TreeVisual>
       <TreeAction className="flex gap-2">
         <StateModal
           schema={schema}
@@ -143,27 +149,28 @@ function StateLeaf({ schema: rootSchema, path }: StateLeafProps) {
       </TreeAction>
       <SubTree>
         {subSchemas.map((schema) => (
-          <Fragment key={schema.title}>
+          <Fragment key={schema.$id}>
             <TreeLeaf>
-              <TreeVisual>Add {schema.title}</TreeVisual>
+              <TreeVisual className="text-sm">Add {schema.$id}</TreeVisual>
               <TreeAction>
                 <AddState
                   schema={schema}
                   onSubmit={(state) =>
                     rootLeaf.create(
                       { ...Value.Create(schema), ...state },
-                      `${path}/${schema.title}`
+                      `${path}/${schema.$id}`
                     )
                   }
                 />
               </TreeAction>
             </TreeLeaf>
-            {subStates[schema.title!].map((state, idx) => (
+            {/* eslint-disable-next-line @typescript-eslint/no-non-null-assertion */}
+            {subStates[schema.$id!].map((state, idx) => (
               <StateLeaf
-                key={`${schema.title}-${idx}`}
+                key={`${schema.$id}-${idx}`}
                 schema={schema}
                 state={state}
-                path={`${path}/${schema.title}/${idx}`}
+                path={`${path}/${schema.$id}/${idx}`}
               />
             ))}
           </Fragment>

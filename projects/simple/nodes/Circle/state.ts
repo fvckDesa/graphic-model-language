@@ -1,7 +1,8 @@
 import { State, schema, stringProperty } from "api";
 
 const CircleSchema = schema({
-  name: "circle",
+  id: "circle",
+  label: "content",
   properties: {
     content: stringProperty({ default: "circle" }),
   },

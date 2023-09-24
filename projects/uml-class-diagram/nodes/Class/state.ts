@@ -2,7 +2,8 @@ import { State, schema, subSchema, stringProperty } from "api";
 import { AttributeSchema, ConstructorSchema, MethodSchema } from "@/core/state";
 
 const ClassSchema = schema({
-  name: "class",
+  id: "class",
+  label: "name",
   properties: {
     name: stringProperty({
       minLength: 1,

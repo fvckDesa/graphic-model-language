@@ -25,7 +25,7 @@ export const TreeView = forwardRef<
 >(({ direction = "left", children, ...subTreeProps }, ref) => {
   return (
     <TreeViewContext.Provider value={{ direction }}>
-      <SubTree ref={ref} {...subTreeProps}>
+      <SubTree ref={ref} className="[&>*]:p-0" {...subTreeProps}>
         {children}
       </SubTree>
     </TreeViewContext.Provider>
@@ -56,7 +56,7 @@ SubTree.displayName = "SubTree";
 export const TreeLeaf = forwardRef<
   ElementRef<"li">,
   ComponentPropsWithoutRef<"li">
->(({ children, className, style = {}, ...liProps }, ref) => {
+>(({ children, className, ...liProps }, ref) => {
   const { depth } = useContext(LeafContext);
   const { direction } = useContext(TreeViewContext);
   const { visual, action, subTree } = useSubTree(children);
@@ -66,14 +66,14 @@ export const TreeLeaf = forwardRef<
       <li
         ref={ref}
         className={cn(className, "flex-1", {
-          "pl-2": direction === "left",
-          "pr-2": direction === "right",
+          "pl-4": direction === "left",
+          "pr-4": direction === "right",
         })}
         {...liProps}
       >
         <div className="flex items-center justify-between">
-          <span>{visual}</span>
-          <span>{action}</span>
+          {visual}
+          {action}
         </div>
         {subTree}
       </li>
@@ -86,9 +86,16 @@ TreeLeaf.displayName = "TreeLeaf";
 export const TreeVisual = forwardRef<
   ElementRef<"div">,
   ComponentPropsWithoutRef<"div">
->(({ children, ...divProps }, ref) => {
+>(({ children, className, ...divProps }, ref) => {
   return (
-    <div ref={ref} {...divProps}>
+    <div
+      ref={ref}
+      className={cn(
+        "flex-1 overflow-hidden text-ellipsis whitespace-nowrap",
+        className
+      )}
+      {...divProps}
+    >
       {children}
     </div>
   );
