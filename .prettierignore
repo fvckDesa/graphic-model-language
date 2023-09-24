@@ -1,3 +1,4 @@
 **/.next/**/*
 **/build/**/*
 *.hbs
+pnpm-lock.yaml

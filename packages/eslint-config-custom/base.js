@@ -2,15 +2,8 @@
 module.exports = {
   env: { es2020: true },
   reportUnusedDisableDirectives: true,
-  extends: ["eslint:recommended", "turbo", "prettier"],
-  plugins: ["prettier"],
+  extends: ["eslint:recommended"],
   rules: {
-    "prettier/prettier": [
-      "error",
-      {
-        endOfLine: "auto",
-      },
-    ],
     indent: [
       "error",
       2,
