@@ -4,6 +4,7 @@ import { PropsWithChildren } from "react";
 import Providers from "@/components/Providers";
 import NodeList from "@/components/NodeList";
 import EditorTree from "@/components/EditorTree";
+import { prisma } from "database/client";
 
 interface WorkspaceProps {
   params: { id: string };
@@ -13,11 +14,12 @@ export default async function WorkspaceLayout({
   params,
   children,
 }: PropsWithChildren<WorkspaceProps>) {
-  const workspace = {
-    id: "abc",
-    name: "Test",
-    projectType: "uml-class-diagram",
-  };
+  const workspace = await prisma.workspace.findUnique({
+    where: {
+      id: params.id,
+    },
+  });
+
   //TODO add not-found
   if (!workspace) return;
 

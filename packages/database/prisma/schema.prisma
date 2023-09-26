@@ -10,55 +10,28 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Project {
-  type       String      @id
-  workspaces Workspace[]
-  nodes      NodeType[]
-}
-
 model Workspace {
-  id          String   @id @default(uuid())
-  name        String   @unique
-  createdAt   DateTime @default(now())
-  updateAt    DateTime @updatedAt
-  project     Project  @relation(fields: [projectType], references: [type], onDelete: Cascade, onUpdate: Cascade)
+  id          String    @id @default(uuid())
+  name        String    @unique
+  createdAt   DateTime  @default(now())
+  updateAt    DateTime  @updatedAt
   projectType String
-  nodes       Node[]
-  edges       Edge[]
+  snapshot    Snapshot?
+  updates     Update[]
 }
 
-model NodeType {
-  name        String  @id
-  schema      Json    @db.Json
-  states      State[]
-  Node        Node[]
-  project     Project @relation(fields: [projectType], references: [type], onDelete: Cascade, onUpdate: Cascade)
-  projectType String
+model Snapshot {
+  id          String    @id @default(uuid())
+  updateAt    DateTime  @updatedAt
+  blob        Bytes     @db.ByteA
+  workspace   Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  workspaceId String    @unique
 }
 
-model Node {
-  id           String    @id @default(uuid())
-  pos_x        Float
-  pos_y        Float
-  nodeType     NodeType  @relation(fields: [nodeTypeName], references: [name])
-  nodeTypeName String
-  workspace    Workspace @relation(fields: [workspaceId], references: [id])
-  workspaceId  String
-}
-
-model Edge {
-  id           String    @id @default(uuid())
-  source       String
-  target       String
-  sourceHandle String
-  targetHandle String
-  workspace    Workspace @relation(fields: [workspaceId], references: [id])
-  workspaceId  String
-}
-
-model State {
-  id           String   @id @default(uuid())
-  value        Json     @db.JsonB
-  nodeType     NodeType @relation(fields: [nodeTypeName], references: [name])
-  nodeTypeName String
+model Update {
+  id          String    @id @default(uuid())
+  createdAt   DateTime  @default(now())
+  blob        Bytes     @db.ByteA
+  workspace   Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  workspaceId String
 }

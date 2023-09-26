@@ -30,7 +30,8 @@
     "tsup": "^7.1.0",
     "typescript": "^5.1.0",
     "projects": "workspace:*",
-    "tsup-config": "workspace:*"
+    "tsup-config": "workspace:*",
+    "api": "workspace:*"
   },
   "dependencies": {
     "@prisma/client": "^5.2.0"

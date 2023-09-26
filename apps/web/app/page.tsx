@@ -1,14 +1,9 @@
 import Link from "next/link";
-
-const workspaces = [
-  {
-    id: "abc",
-    name: "Test",
-    projectType: "simple",
-  },
-];
+import { prisma } from "database/client";
 
 export default async function Home() {
+  const workspaces = await prisma.workspace.findMany();
+
   return (
     <main className="flex flex-col items-center justify-center gap-6 p-8">
       <h1>Select Workspace</h1>

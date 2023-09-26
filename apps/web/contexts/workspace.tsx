@@ -61,7 +61,7 @@ export default function WorkspaceProvider({
       (doc) => {
         const provider = new SocketIoProvider(
           doc,
-          io("http://localhost:8080/workspace:abc")
+          io(`http://localhost:8080/workspace:${workspaceId}`)
         );
 
         return () => provider.destroy();
