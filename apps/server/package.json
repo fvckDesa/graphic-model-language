@@ -1,0 +1,33 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "dev": "tsx watch server.ts",
+    "build": "tsup-node",
+    "lint": "eslint **/*.{ts,tsx} --max-warnings 0",
+    "lint:fix": "eslint **/*.{ts,tsx} --max-warnings 0 --fix",
+    "lint:types": "tsc --noEmit"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "bufferutil": "^4.0.7",
+    "database": "workspace:*",
+    "socket.io": "^4.7.2",
+    "utf-8-validate": "^6.0.3",
+    "yjs": "^13.6.7"
+  },
+  "devDependencies": {
+    "eslint": "^7.32.0",
+    "eslint-config-custom": "workspace:*",
+    "tsconfig": "workspace:*",
+    "tsup": "^7.1.0",
+    "tsup-config": "workspace:*",
+    "tsx": "^3.12.8",
+    "typescript": "^5.1.0"
+  }
+}

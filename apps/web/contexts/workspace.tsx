@@ -19,9 +19,10 @@ import {
   OnEdgesChange,
   OnConnect,
 } from "reactflow";
-import { BroadcastProvider } from "@/lib/broadcast-provider";
+import { SocketIoProvider } from "@/lib/socket-io-provider";
 import { GenericState } from "api";
 import { Value, ValuePointer } from "@sinclair/typebox/value";
+import { io } from "socket.io-client";
 
 type OnStateUpdate = (id: string, state: GenericState, path: string) => void;
 type OnStateDelete = (id: string, path: string) => void;
@@ -44,12 +45,6 @@ interface WorkspaceProviderProps {
   workspaceId: string;
 }
 
-function mount(doc: Y.Doc) {
-  const provider = new BroadcastProvider(doc, "test");
-
-  return () => provider.destroy();
-}
-
 export interface EditorActions {
   changeNodes: (changes: NodeChange[]) => void;
   changeEdges: (changes: EdgeChange[]) => void;
@@ -60,7 +55,20 @@ export default function WorkspaceProvider({
   workspaceId,
   children,
 }: PropsWithChildren<WorkspaceProviderProps>) {
-  const yDoc = useYDoc("workspace", mount);
+  const yDoc = useYDoc(
+    "workspace",
+    useCallback(
+      (doc) => {
+        const provider = new SocketIoProvider(
+          doc,
+          io("http://localhost:8080/workspace:abc")
+        );
+
+        return () => provider.destroy();
+      },
+      [workspaceId]
+    )
+  );
   const nodes = useYMap(yDoc.getMap<Node<GenericState>>("nodes"));
   const edges = useYMap(yDoc.getMap<Edge>("edges"));
 
