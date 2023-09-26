@@ -5,7 +5,3 @@
 .react-flow__handle {
   @apply h-2 w-2 border-2 border-black bg-white;
 }
-
-.no-handle .react-flow__handle {
-  display: none;
-}

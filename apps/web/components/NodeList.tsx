@@ -4,7 +4,7 @@ import { DragEvent, PropsWithChildren, useRef, useLayoutEffect } from "react";
 import { Value } from "@sinclair/typebox/value";
 import { cn } from "cn";
 import { NodeDef } from "projects";
-import { GenericState } from "api";
+import { GenericState, HandleContext } from "api";
 
 interface NodeListProps {
   className?: string;
@@ -14,21 +14,17 @@ export default function NodeList({ className }: NodeListProps) {
   const { project } = useProject();
 
   return (
-    <ul
-      className={cn(
-        "no-handle",
-        className,
-        "flex flex-wrap justify-center gap-4"
-      )}
-    >
-      {Object.entries<NodeDef>(project).map(([name, { Node, schema }]) => {
-        const state = Value.Create(schema);
-        return (
-          <DragNode key={name} type={name} state={state}>
-            <Node state={state} />
-          </DragNode>
-        );
-      })}
+    <ul className={cn(className, "flex flex-wrap justify-center gap-4")}>
+      <HandleContext.Provider value={{ hidden: true }}>
+        {Object.entries<NodeDef>(project).map(([name, { Node, schema }]) => {
+          const state = Value.Create(schema);
+          return (
+            <DragNode key={name} type={name} state={state}>
+              <Node state={state} />
+            </DragNode>
+          );
+        })}
+      </HandleContext.Provider>
     </ul>
   );
 }

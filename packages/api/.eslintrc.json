@@ -1,4 +1,4 @@
 {
   "root": true,
-  "extends": ["custom/base", "custom/typescript"]
+  "extends": ["custom/base", "custom/typescript", "custom/react"]
 }

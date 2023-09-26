@@ -77,13 +77,7 @@ interface RootLeafProps {
 function RootLeaf({ node }: RootLeafProps) {
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const schema = useSchema(node.type!);
-  const { createSubState, updateState, deleteState } = useWorkspace(
-    (state) => ({
-      createSubState: state.createSubState,
-      updateState: state.updateState,
-      deleteState: state.deleteState,
-    })
-  );
+  const { createSubState, updateState, deleteState } = useWorkspace();
 
   const create = useCallback<RootLeafContextProps["create"]>(
     (state, path) => createSubState(node.id, state, path),

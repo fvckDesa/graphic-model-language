@@ -90,7 +90,7 @@ export class BroadcastProvider {
   }
 
   private onUpdate(update: Uint8Array, origin: unknown) {
-    if (origin !== this.channel && origin !== "store") {
+    if (origin !== this.channel) {
       this.send({
         eventType: "update",
         payload: update,

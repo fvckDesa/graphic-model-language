@@ -1,8 +1,8 @@
 import { defineConfig, Options } from "tsup";
-import { browser } from "tsup-config";
+import { react } from "tsup-config";
 
 export default defineConfig((options: Options) => ({
   entry: ["./src/index.ts"],
-  ...browser,
+  ...react,
   ...options,
 }));
