@@ -19,10 +19,12 @@
     "@radix-ui/react-select": "^1.2.2",
     "@radix-ui/react-slot": "^1.0.2",
     "@sinclair/typebox": "^0.31.8",
+    "api": "workspace:*",
     "class-variance-authority": "^0.7.0",
     "clsx": "^1.2.1",
     "cn": "workspace:*",
     "database": "workspace:*",
+    "jotai": "^2.4.2",
     "lucide-react": "^0.279.0",
     "next": "13.4.9",
     "projects": "workspace:*",
@@ -34,8 +36,9 @@
     "tailwind-merge": "^1.14.0",
     "tailwindcss-animate": "^1.0.7",
     "uuid": "^9.0.0",
+    "yjs": "^13.6.7",
     "zustand": "^4.4.1",
-    "api": "workspace:*"
+    "zustand-yjs": "^0.0.14"
   },
   "devDependencies": {
     "@types/react": "^18.2.0",

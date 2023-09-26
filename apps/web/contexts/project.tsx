@@ -21,17 +21,19 @@ const ProjectContext = createContext<ProjectContextProps | null>(null);
 
 interface ProjectProviderProps {
   type: string;
+  onProjectLoad: () => void;
   children: ReactNode;
 }
 
 export default function ProjectProvider({
   type,
+  onProjectLoad,
   children,
 }: ProjectProviderProps) {
   const [project, setProject] = useState<Project>({});
 
   useEffect(() => {
-    importProject(type, true).then(setProject);
+    importProject(type, true).then(setProject).then(onProjectLoad);
   }, [type]);
 
   return (
@@ -39,6 +41,10 @@ export default function ProjectProvider({
       {children}
     </ProjectContext.Provider>
   );
+}
+
+function NoSSR({ children }: { children: ReactNode }) {
+  return typeof window === "undefined" ? null : children;
 }
 
 export function useProject() {
