@@ -7,8 +7,8 @@ function Enum({ state }: NodeProps<EnumState>) {
     <>
       <Handle type="source" id="top" position={Position.Top} />
       <Handle type="source" id="left" position={Position.Left} />
-      <div className="uml-h-full uml-w-full uml-min-w-[220px] uml-cursor-pointer uml-overflow-hidden uml-rounded-lg uml-bg-white uml-font-medium uml-border-2 uml-border-gray-400">
-        <h1 className="uml-border-b-2 uml-border-gray-400 uml-bg-gray-200 uml-p-2 uml-text-center uml-text-base uml-font-semibold">
+      <div className="uml-h-full uml-w-full uml-min-w-[220px] uml-cursor-pointer uml-overflow-hidden uml-rounded-lg uml-bg-white uml-font-medium uml-border-2 uml-border-green-400">
+        <h1 className="uml-border-b-2 uml-border-green-400 uml-bg-green-200 uml-p-2 uml-text-center uml-text-base uml-font-semibold">
           <span>
             {"<<"}enumeration{">>"}
           </span>
