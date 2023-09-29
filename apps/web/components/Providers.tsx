@@ -28,7 +28,9 @@ function Providers({
         </WorkspaceProvider>
       ) : (
         <ScreenLoader>
-          <Loader loaded={projectLoad}>Import Project '{projectType}'</Loader>
+          <Loader loaded={projectLoad}>
+            Import Project &apos;{projectType}&apos;
+          </Loader>
         </ScreenLoader>
       )}
     </ProjectProvider>

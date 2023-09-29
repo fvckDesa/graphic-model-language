@@ -61,7 +61,9 @@ export default function WorkspaceProvider({
       (doc) => {
         const provider = new SocketIoProvider(
           doc,
-          io(`http://localhost:8080/workspace:${workspaceId}`)
+          io(`http://localhost:8080/workspace:${workspaceId}`, {
+            withCredentials: true,
+          })
         );
 
         return () => provider.destroy();
@@ -152,7 +154,7 @@ export default function WorkspaceProvider({
     (connection) => {
       if (!connection.source || !connection.target) return;
       const id = getEdgeId(connection);
-      edges.set(id, { ...connection, id } as Edge);
+      edges.set(id, { ...connection, id, type: "floating" } as Edge);
     },
     [edges]
   );

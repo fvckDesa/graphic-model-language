@@ -2,6 +2,7 @@ const { base } = require("tailwind-config");
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
+  mode: "jit",
   darkMode: ["class"],
   presets: [base],
   content: [

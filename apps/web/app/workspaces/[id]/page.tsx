@@ -1,5 +1,6 @@
 "use client";
 import DropNodeArea from "@/components/DropNodeArea";
+import FloatingEdge from "@/components/FloatingEdge";
 import { useProjectNodes } from "@/contexts/project";
 import { useWorkspace } from "@/contexts/workspace";
 import { useCallback } from "react";
@@ -10,7 +11,12 @@ import {
   OnNodesChange,
   ReactFlow,
   ConnectionMode,
+  EdgeTypes,
 } from "reactflow";
+
+const edgeTypes: EdgeTypes = {
+  floating: FloatingEdge,
+};
 
 export default function WorkspacePage() {
   const nodeTypes = useProjectNodes();
@@ -24,6 +30,7 @@ export default function WorkspacePage() {
     <DropNodeArea>
       <ReactFlow
         nodeTypes={nodeTypes}
+        edgeTypes={edgeTypes}
         nodes={nodes}
         edges={edges}
         onNodesChange={onNodesChange}

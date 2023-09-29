@@ -116,12 +116,13 @@ function StateLeaf({ schema: rootSchema, path }: StateLeafProps) {
 
   return (
     <TreeLeaf>
-      {/* eslint-disable-next-line @typescript-eslint/no-non-null-assertion */}
+      {/* eslint-disable @typescript-eslint/no-non-null-assertion */}
       <TreeVisual className="text-sm">
         {typeof state[schema.title!] === "string"
           ? state[schema.title!]
           : schema.title}
       </TreeVisual>
+      {/* eslint-enable @typescript-eslint/no-non-null-assertion */}
       <TreeAction className="flex gap-2">
         <StateModal
           schema={schema}
