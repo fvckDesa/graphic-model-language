@@ -9,6 +9,7 @@ import {
 } from "react";
 import { Button } from "./ui/button";
 import { Loader2, Share2, Trash2 } from "lucide-react";
+import ShareButton from "./ShareBtn";
 
 interface WorkspaceItemContextProps {
   id: string;
@@ -53,26 +54,15 @@ export function WorkspaceItem({
 
 export function WorkspaceItemShare() {
   const { id } = useWorkspaceItem();
-  const [isLoading, setIsLoading] = useState(false);
 
-  async function onClick(e: MouseEvent) {
+  function onClick(e: MouseEvent) {
     e.stopPropagation();
-    setIsLoading(true);
-    try {
-      await navigator.clipboard.writeText(
-        `${window.origin}/workspaces/connect?${new URLSearchParams({
-          id,
-        })}`
-      );
-    } finally {
-      setIsLoading(false);
-    }
   }
 
   return (
-    <Button variant="ghost" size="icon" onClick={onClick}>
-      {isLoading ? <Loader2 className="animate-spin" /> : <Share2 />}
-    </Button>
+    <ShareButton id={id} variant="ghost" size="icon" onClick={onClick}>
+      <Share2 />
+    </ShareButton>
   );
 }
 
