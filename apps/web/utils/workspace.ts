@@ -13,3 +13,11 @@ export const NewWorkspaceSchema = Type.Object({
 });
 
 export type NewWorkspace = Static<typeof NewWorkspaceSchema>;
+
+export const DeleteWorkspaceSchema = Type.Object({
+  id: Type.String({
+    minLength: 1,
+  }),
+});
+
+export type DeleteWorkspace = Static<typeof DeleteWorkspaceSchema>;

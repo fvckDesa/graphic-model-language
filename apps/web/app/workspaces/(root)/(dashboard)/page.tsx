@@ -3,6 +3,10 @@ import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { getServerSession } from "next-auth";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import {
+  WorkspaceItem,
+  WorkspaceItemDelete,
+} from "@/components/workspace-item";
 import { Plus } from "lucide-react";
 
 export default async function Home() {
@@ -30,15 +34,13 @@ export default async function Home() {
       {workspaces.length > 0 ? (
         <ul className="space-y-4">
           {workspaces.map(({ id, name, projectType }) => (
-            <li
-              key={id}
-              className="border-border w-full cursor-pointer rounded border"
-            >
-              <Link href={`/workspaces/${id}`} className="block px-4 py-2">
+            <WorkspaceItem key={id} id={id}>
+              <div>
                 <h1>{name}</h1>
                 <h3>{projectType}</h3>
-              </Link>
-            </li>
+              </div>
+              <WorkspaceItemDelete />
+            </WorkspaceItem>
           ))}
         </ul>
       ) : (

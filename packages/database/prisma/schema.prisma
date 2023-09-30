@@ -44,9 +44,9 @@ enum UserType {
 
 model UserOnWorkspace {
   type        UserType  @default(User)
-  user        User      @relation(fields: [userId], references: [id])
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId      String
-  workspace   Workspace @relation(fields: [workspaceId], references: [id])
+  workspace   Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
   workspaceId String
 
   @@id([userId, workspaceId])

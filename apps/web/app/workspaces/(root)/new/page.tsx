@@ -21,7 +21,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { cn } from "cn";
-import { NewWorkspaceSchema, NewWorkspace, Projects } from "@/lib/schema";
+import { NewWorkspaceSchema, NewWorkspace, Projects } from "@/utils/workspace";
 import { Separator } from "@/components/ui/separator";
 import { Loader2 } from "lucide-react";
 import { useRouter } from "next/navigation";
