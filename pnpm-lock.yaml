@@ -337,6 +337,9 @@ importers:
 
   packages/projects:
     dependencies:
+      '@projects/database-diagram':
+        specifier: workspace:*
+        version: link:../../projects/database-diagram
       '@projects/simple':
         specifier: workspace:*
         version: link:../../projects/simple
@@ -399,11 +402,17 @@ importers:
         specifier: ^5.1.0
         version: 5.2.2
 
-  projects/logic-network:
+  projects/database-diagram:
     dependencies:
       api:
         specifier: workspace:*
         version: link:../../packages/api
+      cn:
+        specifier: workspace:*
+        version: link:../../packages/cn
+      lucide-react:
+        specifier: ^0.279.0
+        version: 0.279.0(react@18.2.0)
       react:
         specifier: ^18.2.0
         version: 18.2.0

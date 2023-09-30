@@ -1,18 +1,16 @@
 import { ComponentType } from "react";
 import { NodeProps, Schema, GenericState, isSchema } from "api";
 
-type ProjectPkg = `@projects/${string}`;
-
 interface Es6Module {
   [exp: string]: unknown;
   default: unknown;
 }
 
-export const ProjectList = [
-  "@projects/simple",
-  "@projects/uml-class-diagram",
-] satisfies ProjectPkg[];
-
+export enum ProjectsList {
+  Simple = "simple",
+  UmlClassDiagram = "uml-class-diagram",
+  DatabaseDiagram = "database-diagram",
+}
 export interface NodeDef {
   Node: ComponentType<NodeProps<GenericState>>;
   schema: Schema;
@@ -41,6 +39,15 @@ export async function importProject(
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore 2307
         await import("@projects/uml-class-diagram/style.css");
+      }
+      break;
+    }
+    case "database-diagram": {
+      module = await import("@projects/database-diagram");
+      if (css) {
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore 2307
+        await import("@projects/database-diagram/style.css");
       }
       break;
     }

@@ -21,7 +21,11 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { cn } from "cn";
-import { NewWorkspaceSchema, NewWorkspace, Projects } from "@/utils/workspace";
+import {
+  NewWorkspaceSchema,
+  NewWorkspace,
+  ProjectsList,
+} from "@/utils/workspace";
 import { Separator } from "@/components/ui/separator";
 import { Loader2 } from "lucide-react";
 import { useRouter } from "next/navigation";
@@ -105,7 +109,7 @@ export default function Home() {
                       <SelectValue placeholder="Select project type" />
                     </SelectTrigger>
                     <SelectContent>
-                      {Object.entries(Projects).map(([key, value]) => (
+                      {Object.entries(ProjectsList).map(([key, value]) => (
                         <SelectItem key={key} value={value}>
                           {key}
                         </SelectItem>

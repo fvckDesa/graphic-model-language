@@ -1,10 +1,17 @@
 {
-  "name": "projects",
-  "version": "0.0.0",
+  "name": "@projects/database-diagram",
+  "version": "1.0.0",
+  "description": "",
   "type": "module",
   "main": "./build/index.js",
   "types": "./build/index.d.ts",
-  "license": "MIT",
+  "exports": {
+    ".": {
+      "import": "./build/index.js",
+      "types": "./build/index.d.ts"
+    },
+    "./style.css": "./build/index.css"
+  },
   "scripts": {
     "build": "tsup",
     "dev": "tsup --watch",
@@ -12,19 +19,26 @@
     "lint:fix": "eslint **/*.{ts,tsx} --max-warnings 0 --fix",
     "lint:types": "tsc --noEmit"
   },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
   "dependencies": {
-    "@projects/simple": "workspace:*",
-    "@projects/uml-class-diagram": "workspace:*",
-    "@projects/database-diagram": "workspace:*"
+    "lucide-react": "^0.279.0",
+    "cn": "workspace:*"
   },
   "peerDependencies": {
-    "react": "^18.2.0",
-    "api": "workspace:*"
+    "api": "workspace:*",
+    "react": "^18.2.0"
   },
   "devDependencies": {
     "@types/react": "^18.2.0",
+    "autoprefixer": "10.4.14",
+    "esbuild-postcss": "^0.0.4",
     "eslint": "^7.32.0",
     "eslint-config-custom": "workspace:*",
+    "postcss": "8.4.25",
+    "tailwind-config": "workspace:*",
+    "tailwindcss": "^3.3.3",
     "tsconfig": "workspace:*",
     "tsup": "^7.1.0",
     "tsup-config": "workspace:*",

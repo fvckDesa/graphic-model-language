@@ -1,3 +1,4 @@
+"use client";
 import { GenericState } from "./schema";
 import { Handle as ReactFlowHandle, HandleProps } from "reactflow";
 import { createContext, useContext } from "react";

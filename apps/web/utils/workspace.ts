@@ -1,15 +1,16 @@
 import { Static, Type } from "@sinclair/typebox";
 
-export enum Projects {
+export enum ProjectsList {
   Simple = "simple",
   UmlClassDiagram = "uml-class-diagram",
+  DatabaseDiagram = "database-diagram",
 }
 
 export const NewWorkspaceSchema = Type.Object({
   name: Type.String({
     minLength: 1,
   }),
-  project: Type.Enum(Projects),
+  project: Type.Enum(ProjectsList),
 });
 
 export type NewWorkspace = Static<typeof NewWorkspaceSchema>;
