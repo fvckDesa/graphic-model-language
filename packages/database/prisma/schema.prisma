@@ -37,7 +37,13 @@ model Update {
   workspaceId String
 }
 
+enum UserType {
+  User
+  Owner
+}
+
 model UserOnWorkspace {
+  type        UserType  @default(User)
   user        User      @relation(fields: [userId], references: [id])
   userId      String
   workspace   Workspace @relation(fields: [workspaceId], references: [id])

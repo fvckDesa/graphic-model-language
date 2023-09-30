@@ -1,4 +1,4 @@
-import { prisma } from "database/client";
+import { prisma, UserType } from "database/client";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { NextRequest, NextResponse } from "next/server";
@@ -27,6 +27,16 @@ export async function POST(request: NextRequest) {
     data: {
       name,
       projectType: project,
+      users: {
+        create: {
+          type: UserType.Owner,
+          user: {
+            connect: {
+              id: session.user.id,
+            },
+          },
+        },
+      },
     },
   });
 

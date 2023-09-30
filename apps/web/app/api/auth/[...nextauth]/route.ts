@@ -4,6 +4,17 @@ import { PrismaAdapter } from "@auth/prisma-adapter";
 import { prisma } from "database/client";
 import { env } from "@/utils/env";
 
+declare module "next-auth" {
+  interface Session {
+    user: {
+      id: string;
+      email: string;
+      name?: string | null;
+      image?: string | null;
+    };
+  }
+}
+
 export const authOptions: AuthOptions = {
   secret: env.NEXTAUTH_SECRET,
   session: {
@@ -16,6 +27,15 @@ export const authOptions: AuthOptions = {
       clientSecret: env.GITHUB_SECRET,
     }),
   ],
+  callbacks: {
+    session({ session, user }) {
+      if (user) {
+        session.user = user;
+      }
+
+      return session;
+    },
+  },
 };
 
 const handler = NextAuth(authOptions);

@@ -16,7 +16,9 @@ const PORT = 8080;
 
 const io = new Server<ClientToServerEvents, ServerToClientEvents>(PORT, {
   cors: {
-    origin: "*",
+    origin: "http://localhost:3000",
+    methods: ["GET", "POST"],
+    credentials: true,
   },
 });
 
@@ -34,11 +36,64 @@ function getDoc(id: string, initialize?: (doc: Y.Doc) => void): Y.Doc {
 
   return doc;
 }
+
+function parseCookie(str: string): Record<string, string> {
+  return str
+    .split(";")
+    .map((v) => v.split("="))
+    .reduce<Record<string, string>>((acc, v) => {
+      acc[decodeURIComponent(v[0].trim())] = decodeURIComponent(v[1].trim());
+      return acc;
+    }, {});
+}
+
 const workspaces = io.of(/workspace:.+/);
 
 workspaces.use(async (socket, next) => {
+  const workspaceId = getWorkspaceId(socket.nsp.name);
+
+  const sessionToken = parseCookie(socket.request.headers.cookie ?? "")[
+    "next-auth.session-token"
+  ];
+
+  if (!sessionToken) {
+    next(new Error("Session token not found"));
+    return;
+  }
+
+  const session = await prisma.session.findUnique({
+    where: {
+      sessionToken,
+    },
+    select: {
+      user: true,
+    },
+  });
+
+  if (!session) {
+    next(new Error("Session not found"));
+    return;
+  }
+
+  const connection = await prisma.userOnWorkspace.findUnique({
+    where: {
+      userId_workspaceId: {
+        workspaceId,
+        userId: session.user.id,
+      },
+    },
+  });
+
+  if (!connection) {
+    next(new Error("Not Authorized"));
+  }
+
+  next();
+});
+
+workspaces.use(async (socket, next) => {
   const id = getWorkspaceId(socket.nsp.name);
-  console.log(id);
+
   const workspace = await prisma.workspace.findUnique({
     where: { id },
     select: {
