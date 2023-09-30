@@ -29,7 +29,7 @@ export default async function WorkspaceLayout({
   return (
     <Providers projectType={workspace.projectType} workspaceId={params.id}>
       <div className="grid h-full w-full grid-cols-[1fr,3fr,1fr]">
-        <aside className="h-full w-full border-r-2 border-gray-400">
+        <aside className="h-full w-full overflow-hidden border-r-2 border-gray-400">
           <ScrollArea type="auto" className="h-full w-full p-4">
             <NodeList />
           </ScrollArea>
