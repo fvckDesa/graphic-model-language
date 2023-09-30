@@ -1,18 +1,15 @@
-import { prisma, UserType } from "database/client";
+import { prisma } from "database/client";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { NextRequest, NextResponse } from "next/server";
-import { Value } from "@sinclair/typebox/value";
 import { WorkspaceIdSchema } from "@/utils/workspace";
+import { Value } from "@sinclair/typebox/value";
 
 export async function POST(request: NextRequest) {
   const session = await getServerSession(authOptions);
 
   if (!session) {
-    return NextResponse.json(
-      { error: "Not Authorized: not sign in" },
-      { status: 401 }
-    );
+    return NextResponse.json({ error: "Not Authorized" }, { status: 401 });
   }
 
   const workspaceId = await request.json();
@@ -24,13 +21,22 @@ export async function POST(request: NextRequest) {
     );
   }
 
-  const workspace = await prisma.workspace.delete({
+  const workspace = await prisma.workspace.update({
     where: {
       id: workspaceId.id,
+      NOT: {
+        users: {
+          some: {
+            userId: session.user.id,
+            workspaceId: workspaceId.id,
+          },
+        },
+      },
+    },
+    data: {
       users: {
-        some: {
+        create: {
           userId: session.user.id,
-          type: UserType.Owner,
         },
       },
     },

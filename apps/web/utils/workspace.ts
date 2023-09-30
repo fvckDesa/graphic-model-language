@@ -14,10 +14,10 @@ export const NewWorkspaceSchema = Type.Object({
 
 export type NewWorkspace = Static<typeof NewWorkspaceSchema>;
 
-export const DeleteWorkspaceSchema = Type.Object({
+export const WorkspaceIdSchema = Type.Object({
   id: Type.String({
     minLength: 1,
   }),
 });
 
-export type DeleteWorkspace = Static<typeof DeleteWorkspaceSchema>;
+export type WorkspaceId = Static<typeof WorkspaceIdSchema>;

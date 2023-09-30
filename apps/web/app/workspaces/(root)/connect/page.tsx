@@ -13,32 +13,26 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { cn } from "cn";
-import { NewWorkspaceSchema, NewWorkspace, Projects } from "@/utils/workspace";
+import { WorkspaceIdSchema, WorkspaceId } from "@/utils/workspace";
 import { Separator } from "@/components/ui/separator";
 import { Loader2 } from "lucide-react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 
 export default function Home() {
   const router = useRouter();
+  const searchParams = useSearchParams();
 
-  const form = useForm<NewWorkspace>({
-    resolver: typeboxResolver(NewWorkspaceSchema),
+  const form = useForm<WorkspaceId>({
+    resolver: typeboxResolver(WorkspaceIdSchema),
     defaultValues: {
-      name: "",
+      id: searchParams.get("id") ?? "",
     },
   });
 
-  const onSubmit = useCallback<SubmitHandler<NewWorkspace>>(
+  const onSubmit = useCallback<SubmitHandler<WorkspaceId>>(
     async (data) => {
-      const res = await fetch("/api/workspaces/new", {
+      const res = await fetch("/api/workspaces/connect", {
         method: "POST",
         body: JSON.stringify(data),
         cache: "no-store",
@@ -57,20 +51,19 @@ export default function Home() {
         className="mx-auto max-w-xl px-4 py-6"
       >
         <header>
-          <h1 className="text-3xl font-bold">Create new Workspace</h1>
+          <h1 className="text-3xl font-bold">Connect to Workspace</h1>
           <p className="text-muted-foreground">
-            A workspace lets you work on one type of project with whoever you
-            want
+            Connect to a workspace for collaborate with the owner
           </p>
         </header>
         <Separator className="my-2" />
         <div className="space-y-8">
           <FormField
             control={form.control}
-            name="name"
+            name="id"
             render={({ field, fieldState: { error } }) => (
               <FormItem>
-                <FormLabel>Name</FormLabel>
+                <FormLabel>ID</FormLabel>
                 <FormControl>
                   <Input
                     autoComplete="off"
@@ -81,39 +74,7 @@ export default function Home() {
                     {...field}
                   />
                 </FormControl>
-                <FormDescription>Workspace name</FormDescription>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="project"
-            render={({ field, fieldState: { error } }) => (
-              <FormItem>
-                <FormLabel>Project</FormLabel>
-                <FormControl>
-                  <Select
-                    onValueChange={field.onChange}
-                    defaultValue={field.value}
-                  >
-                    <SelectTrigger
-                      className={cn({
-                        "border-destructive border-2": !!error,
-                      })}
-                    >
-                      <SelectValue placeholder="Select project type" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {Object.entries(Projects).map(([key, value]) => (
-                        <SelectItem key={key} value={value}>
-                          {key}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </FormControl>
-                <FormDescription>Workspace project type</FormDescription>
+                <FormDescription>Workspace ID</FormDescription>
                 <FormMessage />
               </FormItem>
             )}
@@ -125,7 +86,7 @@ export default function Home() {
             {form.formState.isSubmitting && (
               <Loader2 className="mr-2 h-4 w-4 animate-spin" />
             )}
-            <span>Create</span>
+            <span>Connect</span>
           </Button>
         </footer>
       </form>

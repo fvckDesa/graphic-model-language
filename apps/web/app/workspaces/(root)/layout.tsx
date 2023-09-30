@@ -2,7 +2,7 @@ import { PropsWithChildren } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { getServerSession } from "next-auth";
 import Link from "next/link";
-import { Database, Home } from "lucide-react";
+import { Database, Home, Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 
@@ -27,6 +27,12 @@ export default async function HomeLayout({ children }: PropsWithChildren) {
           </Button>
         </div>
         <div className="flex gap-4">
+          <Button variant="outline" asChild>
+            <Link href="/workspaces/connect">
+              <Plus className="mr-2 h-4 w-4" />
+              <span>Connect</span>
+            </Link>
+          </Button>
           <Button asChild>
             <Link href="/workspaces/new">
               <Database className="mr-2 h-4 w-4" />
@@ -39,7 +45,7 @@ export default async function HomeLayout({ children }: PropsWithChildren) {
           </Avatar>
         </div>
       </header>
-      <div className="w-full flex-1">{children}</div>
+      <div className="w-full flex-1 overflow-hidden">{children}</div>
     </div>
   );
 }
