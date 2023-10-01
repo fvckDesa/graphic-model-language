@@ -5,8 +5,7 @@ import {
   useContext,
   useCallback,
 } from "react";
-import * as Y from "yjs";
-import { useYDoc, useYMap } from "zustand-yjs";
+import { useYAwareness, useYDoc, useYMap } from "zustand-yjs";
 import {
   Edge,
   Node,
@@ -23,6 +22,7 @@ import { SocketIoProvider } from "@/lib/socket-io-provider";
 import { GenericState } from "api";
 import { Value, ValuePointer } from "@sinclair/typebox/value";
 import { io } from "socket.io-client";
+import { Session } from "next-auth";
 
 type OnStateUpdate = (id: string, state: GenericState, path: string) => void;
 type OnStateDelete = (id: string, path: string) => void;
@@ -31,6 +31,7 @@ type OnSubStateCreate = (id: string, state: GenericState, path: string) => void;
 interface WorkspaceContextProps {
   nodes: Node<GenericState>[];
   edges: Edge[];
+  onlineUsers: Session["user"][];
   changeNodes: OnNodesChange;
   changeEdges: OnEdgesChange;
   connect: OnConnect;
@@ -43,6 +44,7 @@ const WorkspaceContext = createContext<WorkspaceContextProps | null>(null);
 
 interface WorkspaceProviderProps {
   workspaceId: string;
+  user: Session["user"];
 }
 
 export interface EditorActions {
@@ -53,12 +55,13 @@ export interface EditorActions {
 
 export default function WorkspaceProvider({
   workspaceId,
+  user,
   children,
 }: PropsWithChildren<WorkspaceProviderProps>) {
   const yDoc = useYDoc(
     "workspace",
     useCallback(
-      (doc) => {
+      (doc, startAwareness) => {
         const provider = new SocketIoProvider(
           doc,
           io(`http://localhost:8080/workspace:${workspaceId}`, {
@@ -66,13 +69,25 @@ export default function WorkspaceProvider({
           })
         );
 
-        return () => provider.destroy();
+        provider.awareness.setLocalState(user);
+
+        const stopAwareness = startAwareness(provider);
+
+        window.addEventListener("beforeunload", provider.destroy);
+
+        return () => {
+          window.removeEventListener("beforeunload", provider.destroy);
+          stopAwareness();
+          provider.destroy();
+        };
       },
-      [workspaceId]
+      [workspaceId, user]
     )
   );
+
   const nodes = useYMap(yDoc.getMap<Node<GenericState>>("nodes"));
   const edges = useYMap(yDoc.getMap<Edge>("edges"));
+  const [onlineUsers] = useYAwareness<Session["user"]>(yDoc);
 
   const changeNodes = useCallback<OnNodesChange>(
     (changes) => {
@@ -252,6 +267,7 @@ export default function WorkspaceProvider({
       value={{
         nodes: Array.from(nodes.values()),
         edges: Array.from(edges.values()),
+        onlineUsers,
         changeNodes,
         changeEdges,
         connect,

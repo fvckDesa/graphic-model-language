@@ -5,11 +5,15 @@ import { prisma } from "database/client";
 interface ServerToClientEvents {
   syncStep2: (state: ArrayBuffer) => void;
   update: (update: ArrayBuffer) => void;
+  queryRemoteAwareness: (remoteState: ArrayBuffer) => void;
+  awarenessUpdate: (update: ArrayBuffer) => void;
 }
 
 interface ClientToServerEvents {
   syncStep1: (state: ArrayBuffer) => void;
   update: (update: ArrayBuffer) => void;
+  queryRemoteAwareness: (localState: ArrayBuffer) => void;
+  awarenessUpdate: (update: ArrayBuffer) => void;
 }
 
 const PORT = 8080;
@@ -167,6 +171,14 @@ workspaces.on("connect", async (socket) => {
 
   socket.on("update", (update) => {
     Y.applyUpdate(doc, new Uint8Array(update));
+  });
+
+  socket.on("queryRemoteAwareness", (localState) => {
+    socket.broadcast.emit("queryRemoteAwareness", localState);
+  });
+
+  socket.on("awarenessUpdate", (update) => {
+    socket.broadcast.emit("awarenessUpdate", update);
   });
 });
 

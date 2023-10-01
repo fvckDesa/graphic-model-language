@@ -4,15 +4,18 @@ import { ReactFlowProvider } from "reactflow";
 import ProjectProvider from "@/contexts/project";
 import WorkspaceProvider from "@/contexts/workspace";
 import { CheckCircle, Loader2 } from "lucide-react";
+import { Session } from "next-auth";
 
 interface ProvidersProps {
   projectType: string;
   workspaceId: string;
+  session: Session;
 }
 
 function Providers({
   projectType,
   workspaceId,
+  session,
   children,
 }: PropsWithChildren<ProvidersProps>) {
   const [projectLoad, setProjectLoad] = useState(false);
@@ -23,7 +26,7 @@ function Providers({
       onProjectLoad={() => setProjectLoad(true)}
     >
       {projectLoad ? (
-        <WorkspaceProvider workspaceId={workspaceId}>
+        <WorkspaceProvider workspaceId={workspaceId} user={session.user}>
           <ReactFlowProvider>{children}</ReactFlowProvider>
         </WorkspaceProvider>
       ) : (
