@@ -407,9 +407,6 @@ importers:
 
   projects/database-diagram:
     dependencies:
-      api:
-        specifier: workspace:*
-        version: link:../../packages/api
       cn:
         specifier: workspace:*
         version: link:../../packages/cn
@@ -423,6 +420,9 @@ importers:
       '@types/react':
         specifier: ^18.2.0
         version: 18.2.5
+      api:
+        specifier: workspace:*
+        version: link:../../packages/api
       autoprefixer:
         specifier: 10.4.14
         version: 10.4.14(postcss@8.4.25)
@@ -459,9 +459,6 @@ importers:
 
   projects/simple:
     dependencies:
-      api:
-        specifier: workspace:*
-        version: link:../../packages/api
       react:
         specifier: ^18.2.0
         version: 18.2.0
@@ -469,6 +466,9 @@ importers:
       '@types/react':
         specifier: ^18.2.0
         version: 18.2.5
+      api:
+        specifier: workspace:*
+        version: link:../../packages/api
       autoprefixer:
         specifier: 10.4.14
         version: 10.4.14(postcss@8.4.25)
@@ -505,9 +505,6 @@ importers:
 
   projects/uml-class-diagram:
     dependencies:
-      api:
-        specifier: workspace:*
-        version: link:../../packages/api
       cn:
         specifier: workspace:*
         version: link:../../packages/cn
@@ -518,6 +515,9 @@ importers:
       '@types/react':
         specifier: ^18.2.0
         version: 18.2.5
+      api:
+        specifier: workspace:*
+        version: link:../../packages/api
       autoprefixer:
         specifier: 10.4.14
         version: 10.4.14(postcss@8.4.25)

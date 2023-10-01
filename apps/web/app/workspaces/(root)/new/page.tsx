@@ -29,6 +29,11 @@ import {
 import { Separator } from "@/components/ui/separator";
 import { Loader2 } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Connect Workspace",
+};
 
 export default function Home() {
   const router = useRouter();

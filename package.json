@@ -3,13 +3,14 @@
   "private": true,
   "scripts": {
     "build": "turbo run build",
-    "dev": "dotenv -e .env.dev -- turbo run dev",
-    "docker:dev": "docker compose --env-file .env.dev up -d",
-    "prisma:dev": "dotenv -e .env.dev -- pnpm --filter database prisma",
+    "dev": "dotenv -e .env.local -- turbo run dev",
+    "start": "dotenv -e .env.local -- turbo run start",
+    "docker": "dotenv -e .env.local -- docker compose up -d",
+    "prisma": "dotenv -e .env.local -- pnpm --filter database prisma",
     "lint": "turbo run lint",
     "lint:fix": "turbo run lint:fix",
     "lint:types": "turbo run lint:types",
-    "format": "prettier --ignore-unknown --write **/* && pnpm prisma:dev format"
+    "format": "prettier --ignore-unknown --write **/* && pnpm prisma format"
   },
   "devDependencies": {
     "@turbo/gen": "^1.10.13",

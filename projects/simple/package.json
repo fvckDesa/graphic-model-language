@@ -27,6 +27,7 @@
     "api": "workspace:*"
   },
   "devDependencies": {
+    "api": "workspace:*",
     "@types/react": "^18.2.0",
     "autoprefixer": "10.4.14",
     "esbuild-postcss": "^0.0.4",

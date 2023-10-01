@@ -3,6 +3,8 @@ import DropNodeArea from "@/components/DropNodeArea";
 import FloatingEdge from "@/components/FloatingEdge";
 import { useProjectNodes } from "@/contexts/project";
 import { useWorkspace } from "@/contexts/workspace";
+import { prisma } from "database/client";
+import { Metadata } from "next";
 import { useCallback } from "react";
 import {
   Background,
@@ -13,6 +15,21 @@ import {
   ConnectionMode,
   EdgeTypes,
 } from "reactflow";
+
+type Props = {
+  params: { id: string };
+};
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { name } = (await prisma.workspace.findUnique({
+    where: {
+      id: params.id,
+    },
+  })) ?? { name: "Unknown" };
+  return {
+    title: name,
+  };
+}
 
 const edgeTypes: EdgeTypes = {
   floating: FloatingEdge,

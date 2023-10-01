@@ -1,81 +1,68 @@
-# Turborepo starter
+# Graphic Model Language
 
-This is an official starter Turborepo.
+## Quick start
 
-## Using this example
+### Prerequisite
 
-Run the following command:
+- Docker
+- Node (Version: >= 18.x)
+- Pnpm (Version: >= 8.7.x)
+- Github Account
+
+### Setup
+
+1. Clone locally the repo
 
 ```sh
-npx create-turbo@latest
+git clone git@github.com:fvckDesa/graphic-model-language.git
 ```
 
-## What's inside?
+2. Go to project directory
 
-This Turborepo includes the following packages/apps:
-
-### Apps and Packages
-
-- `docs`: a [Next.js](https://nextjs.org/) app
-- `web`: another [Next.js](https://nextjs.org/) app
-- `ui`: a stub React component library shared by both `web` and `docs` applications
-- `eslint-config-custom`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
-- `tsconfig`: `tsconfig.json`s used throughout the monorepo
-
-Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
-
-### Utilities
-
-This Turborepo has some additional tools already setup for you:
-
-- [TypeScript](https://www.typescriptlang.org/) for static type checking
-- [ESLint](https://eslint.org/) for code linting
-- [Prettier](https://prettier.io) for code formatting
-
-### Build
-
-To build all apps and packages, run the following command:
-
-```
-cd my-turborepo
-pnpm build
+```sh
+cd graphic-model-language
 ```
 
-### Develop
+3. Install dependency with pnpm
 
-To develop all apps and packages, run the following command:
-
-```
-cd my-turborepo
-pnpm dev
+```sh
+pnpm i
 ```
 
-### Remote Caching
+4. Setup env variables
 
-Turborepo can use a technique known as [Remote Caching](https://turbo.build/repo/docs/core-concepts/remote-caching) to share cache artifacts across machines, enabling you to share build caches with your team and CI/CD pipelines.
+- Copy .env.example into .env.local
+- Go to (Github)[https://github.com/settings/developers] and create new OAuth App
+- Go to the new app and create a client secret
+- Copy the 'Client ID' and the 'Client Secret' into .env.local
+- In .env.local add a next auth secret or generate one with
 
-By default, Turborepo will cache locally. To enable Remote Caching you will need an account with Vercel. If you don't have an account you can [create one](https://vercel.com/signup), then enter the following commands:
-
-```
-cd my-turborepo
-npx turbo login
-```
-
-This will authenticate the Turborepo CLI with your [Vercel account](https://vercel.com/docs/concepts/personal-accounts/overview).
-
-Next, you can link your Turborepo to your Remote Cache by running the following command from the root of your Turborepo:
-
-```
-npx turbo link
+```sh
+openssl rand -base64 32
 ```
 
-## Useful Links
+5. Run database
 
-Learn more about the power of Turborepo:
+```sh
+pnpm docker
+```
 
-- [Tasks](https://turbo.build/repo/docs/core-concepts/monorepos/running-tasks)
-- [Caching](https://turbo.build/repo/docs/core-concepts/caching)
-- [Remote Caching](https://turbo.build/repo/docs/core-concepts/remote-caching)
-- [Filtering](https://turbo.build/repo/docs/core-concepts/monorepos/filtering)
-- [Configuration Options](https://turbo.build/repo/docs/reference/configuration)
-- [CLI Usage](https://turbo.build/repo/docs/reference/command-line-reference)
+6. Add Prisma schemas to database
+
+```sh
+pnpm prisma db push
+```
+
+7. Start web app and server
+
+```sh
+pnpm start
+```
+
+## Keywords
+
+- State: set of data
+- Node: visual component that varies based on its state
+- Edge: connection between two nodes
+- Project: set of Nodes and Edges
+- Workspace: set of Nodes and Edges, like a root state

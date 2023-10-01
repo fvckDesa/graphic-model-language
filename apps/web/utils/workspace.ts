@@ -1,7 +1,7 @@
 import { Static, Type } from "@sinclair/typebox";
 
 export enum ProjectsList {
-  Simple = "simple",
+  //Simple = "simple", only for test
   UmlClassDiagram = "uml-class-diagram",
   DatabaseDiagram = "database-diagram",
 }

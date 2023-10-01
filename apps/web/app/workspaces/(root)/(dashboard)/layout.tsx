@@ -2,6 +2,14 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import Tab from "@/components/Tab";
 import { PropsWithChildren } from "react";
 import { Database, Repeat2 } from "lucide-react";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: {
+    template: "%s | Dashboard",
+    default: "Dashboard",
+  },
+};
 
 export default function HomeLayout({ children }: PropsWithChildren) {
   return (

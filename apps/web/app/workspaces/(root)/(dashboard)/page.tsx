@@ -9,6 +9,11 @@ import {
   WorkspaceItemDelete,
 } from "@/components/workspace-item";
 import { Plus } from "lucide-react";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "My Workspaces",
+};
 
 export default async function Home() {
   const session = await getServerSession(authOptions);

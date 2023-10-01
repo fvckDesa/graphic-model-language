@@ -15,6 +15,14 @@ import ShareButton from "@/components/ShareBtn";
 import OnlineUsers from "@/components/OnlineUsers";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: {
+    template: "%s | Workspace",
+    default: "Workspace",
+  },
+};
 
 interface WorkspaceProps {
   params: { id: string };

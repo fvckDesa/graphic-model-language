@@ -11,5 +11,6 @@ export default defineConfig((options: Options) => ({
   esbuildPlugins: [PostcssPlugin() as Plugin],
   platform: "browser",
   ...react,
+  external: ["react", "api"],
   ...options,
 }));

@@ -6,6 +6,11 @@ import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { WorkspaceItem, WorkspaceItemShare } from "@/components/workspace-item";
 import { Plus } from "lucide-react";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Shared",
+};
 
 export default async function Home() {
   const session = await getServerSession(authOptions);
